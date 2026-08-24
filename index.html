@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CÓDIGO — Creatividad Digital | Diseño, Branding y Marketing</title>
+<meta name="description" content="CÓDIGO es un estudio de creatividad digital en Guatemala. Diseñamos, comunicamos y conectamos marcas con resultados reales a través de branding, marketing y contenido digital.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --navy: #081A38;
+    --navy-2: #0B1B36;
+    --blue: #0047BB;
+    --blue-2: #0055FF;
+    --neon: #23B5E8;
+    --neon-2: #00A8FF;
+    --white: #FFFFFF;
+    --grey: #A8B3C7;
+    --grey-dim: #627190;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: auto; scroll-padding-top: 96px; }
+  html.snap-enabled{ scroll-snap-type: y proximity; }
+  .snap-section{ scroll-snap-align: start; scroll-snap-stop: normal; }
+
+  body{
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  .font-display{ font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  .font-mono{ font-family: 'JetBrains Mono', monospace; }
+
+  ::selection{ background: var(--neon); color: var(--navy); }
+  ::-webkit-scrollbar{ width: 7px; }
+  ::-webkit-scrollbar-track{ background: var(--navy); }
+  ::-webkit-scrollbar-thumb{ background: var(--blue); border-radius: 4px; }
+
+  .noise::before{
+    content:"";
+    position: fixed; inset: 0; z-index: 999; pointer-events: none; opacity: .02;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .grid-bg{
+    background-image:
+      linear-gradient(rgba(35,181,232,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(35,181,232,0.05) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .nav-glass{
+    background: rgba(8, 26, 56, 0.6);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-bottom: 1px solid rgba(35,181,232,0.1);
+  }
+
+  .brand-go{ color: var(--blue-2); }
+
+  .eyebrow{
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: .18em;
+    font-size: 12px;
+    color: var(--neon);
+    display: inline-flex;
+    align-items: center;
+    gap: .6em;
+  }
+  .eyebrow::before{ content:""; width: 22px; height: 1px; background: var(--neon); opacity: .7; }
+
+  .caret{
+    display: inline-block; width: 8px; height: 1em; margin-left: 2px;
+    background: var(--neon); vertical-align: -0.15em;
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  @keyframes caret-blink{ 50%{ opacity: 0; } }
+
+  /* Buttons — with magnetic pull via JS */
+  .btn-primary{
+    background: var(--blue-2); color: var(--white);
+    transition: background .35s, box-shadow .35s;
+    will-change: transform;
+  }
+  .btn-primary:hover{ background: var(--neon-2); box-shadow: 0 0 32px rgba(35,181,232,.45); }
+  .btn-outline{
+    border: 1px solid rgba(255,255,255,.22); color: var(--white);
+    transition: border-color .35s, color .35s, box-shadow .35s;
+    will-change: transform;
+  }
+  .btn-outline:hover{ border-color: var(--neon); color: var(--neon); box-shadow: 0 0 24px rgba(35,181,232,.2); }
+
+  /* Hero wordmark — single restrained signature, not a layered scene */
+  .hero-go{
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700;
+    color: transparent; -webkit-text-stroke: 1.5px rgba(0,71,187,0.4);
+    line-height: 0.8; user-select: none;
+  }
+
+  .underline-draw{
+    stroke-dasharray: 500; stroke-dashoffset: 500;
+    animation: draw-line 1.4s cubic-bezier(.65,0,.35,1) 1.1s forwards;
+  }
+  @keyframes draw-line{ to{ stroke-dashoffset: 0; } }
+
+  /* Hero — video de fondo (YouTube embed) */
+  .hero-video-wrap{ position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .hero-video-yt{
+    position: absolute; top: 50%; left: 50%;
+    width: 100vw; height: 56.25vw; /* 16:9 */
+    min-height: 100%; min-width: 177.77vh; /* 16:9 -> asegura cubrir el contenedor */
+    transform: translate(-50%, -50%);
+    border: 0;
+  }
+  .hero-video-overlay{
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(8,26,56,.55) 0%, rgba(8,26,56,.72) 60%, rgba(8,26,56,.88) 100%);
+  }
+
+  /* Hero — titular: contorno que se rellena con efecto circular desde el centro */
+  .headline-wrap{ position: relative; display: inline-block; cursor: default; }
+  .headline-outline,
+  .headline-fill{
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  .headline-outline{
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.9);
+  }
+  .headline-fill{
+    position: absolute; inset: 0;
+    color: var(--white);
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.9);
+    clip-path: circle(0% at 50% 50%);
+    -webkit-clip-path: circle(0% at 50% 50%);
+    transition: clip-path .9s cubic-bezier(.16,1,.3,1), -webkit-clip-path .9s cubic-bezier(.16,1,.3,1);
+    pointer-events: none;
+    user-select: none;
+  }
+  .headline-wrap:hover .headline-fill,
+  .headline-wrap.is-active .headline-fill{
+    clip-path: circle(150% at 50% 50%);
+    -webkit-clip-path: circle(150% at 50% 50%);
+  }
+
+  /* Service cards — one clean interaction, no stacked pseudo-borders */
+  .service-card{
+    border-top: 1px solid rgba(255,255,255,0.1);
+    transition: border-color .4s, background .4s, transform .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .service-card:hover{
+    border-color: rgba(35,181,232,.5);
+    background: rgba(35,181,232,0.04);
+    transform: translateX(6px);
+  }
+
+  /* Service cards v2 — icon-led grid with a subtle hover lift + icon transform */
+  .service-card-v2{
+    background: rgba(255,255,255,0.02);
+    transition: transform .45s cubic-bezier(.2,.8,.2,1), border-color .4s, background .4s, box-shadow .4s;
+  }
+  .service-card-v2:hover{
+    transform: translateY(-6px);
+    border-color: rgba(35,181,232,.5);
+    background: rgba(35,181,232,0.05);
+    box-shadow: 0 20px 40px -20px rgba(35,181,232,.35);
+  }
+  .icon-wrap{ transition: border-color .4s, background .4s, transform .4s cubic-bezier(.2,.8,.2,1); }
+  .service-card-v2:hover .icon-wrap{
+    border-color: var(--neon);
+    background: rgba(35,181,232,.1);
+    transform: scale(1.06);
+  }
+  .service-icon{ transition: transform .5s cubic-bezier(.34,1.56,.64,1); transform-origin: center; }
+  .service-card-v2:hover .service-icon{ transform: scale(1.15) rotate(-6deg); }
+
+  /* Portfolio cards */
+  .port-card{ position: relative; overflow: hidden; cursor: pointer; }
+  .port-card img{ transition: transform 1.1s cubic-bezier(.16,1,.3,1), filter .6s; filter: saturate(.85) brightness(.85); }
+  .port-card:hover img{ transform: scale(1.06); filter: saturate(1.05) brightness(.95); }
+  .port-card .overlay{ background: linear-gradient(180deg, transparent 30%, rgba(8,26,56,0.95) 100%); }
+  .port-card .plus{ width: 46px; height: 46px; border: 1px solid rgba(255,255,255,.3); transition: all .4s; }
+  .port-card:hover .plus{ border-color: var(--neon); background: var(--neon); color: var(--navy); transform: rotate(90deg); }
+
+  /* Before / After */
+  /* pan-y: permite que el usuario siga haciendo scroll vertical con el dedo
+     sobre la imagen; solo el "knob" del slider bloquea el gesto para arrastrar. */
+  .ba-wrap{ position: relative; overflow: hidden; user-select: none; touch-action: pan-y; }
+  .ba-after{ position: absolute; inset: 0; overflow: hidden; width: 50%; }
+  .ba-after img{ width: var(--ba-img-w, 100%); height: 100%; object-fit: cover; display: block; }
+  .ba-handle{ position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--neon); box-shadow: 0 0 16px rgba(35,181,232,.7); cursor: ew-resize; transform: translateX(-1px); touch-action: none; }
+  .ba-handle .knob{ position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 46px; height: 46px; border-radius: 999px; background: var(--neon); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 24px rgba(35,181,232,.6); }
+  .ba-dot{ width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.2); transition: all .35s; }
+  .ba-dot.active{ width: 26px; background: var(--neon); }
+
+  .process-num{
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.22); color: transparent;
+  }
+
+  /* El movimiento automático + las flechas de #clientes se controlan por JS
+     (translateX en tiempo real), así ambos pueden combinarse sin pelear
+     entre sí como pasaría con una animación @keyframes pura. */
+  .marquee-track{ display: flex; width: max-content; will-change: transform; }
+
+  .modal-bg{ background: rgba(4,12,26,0.85); backdrop-filter: blur(8px); }
+
+  /* Modal: transición fluida de apertura/cierre (fade + scale) */
+  #projectModal{ opacity: 0; transition: opacity .35s ease; }
+  #projectModal.is-open{ opacity: 1; }
+  #modalCard{
+    transform: scale(.94) translateY(24px);
+    opacity: 0;
+    transition: transform .45s cubic-bezier(.16,1,.3,1), opacity .4s ease;
+  }
+  #projectModal.is-open #modalCard{ transform: scale(1) translateY(0); opacity: 1; }
+
+  #modalCarouselTrack > div{ position: relative; width: 100%; flex-shrink: 0; }
+  #modalCarouselTrack img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .modal-dot{ width: 7px; height: 7px; border-radius: 999px; background: rgba(255,255,255,0.3); transition: all .3s; }
+  .modal-dot.active{ width: 20px; background: var(--neon); }
+
+  .field{ background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12); transition: all .3s; }
+  .field:focus{ outline: none; border-color: var(--neon); box-shadow: 0 0 0 3px rgba(35,181,232,0.15); }
+
+  .menu-line{ transition: all .35s cubic-bezier(.6,0,.4,1); transform-origin: center; }
+  .menu-open .menu-line-1{ transform: translateY(7px) rotate(45deg); }
+  .menu-open .menu-line-2{ opacity: 0; }
+  .menu-open .menu-line-3{ transform: translateY(-7px) rotate(-45deg); }
+
+  a, button{ cursor: pointer; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+    outline: 2px solid var(--neon); outline-offset: 3px;
+  }
+
+  /* ---- Signature element: the trace ---- */
+  /* Una sola línea vertical fija que corre de inicio a fin del recorrido,
+     se dibuja en proporción al scroll real del usuario y enciende un
+     nodo con un glifo distinto por sección. Sustituye cualquier otro
+     indicador de progreso: es la única pieza de "cromo" persistente
+     de la página. */
+  #trace{
+    position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
+    width: 1px; height: 300px; z-index: 40;
+  }
+  #traceLine{ position: absolute; inset: 0; background: rgba(255,255,255,0.08); }
+  #traceFill{ position: absolute; top: 0; left: 0; width: 100%; height: 0%; background: linear-gradient(180deg, var(--neon), var(--blue-2)); }
+  #traceNode{
+    position: absolute; left: 50%; top: 0%; transform: translate(-50%,-50%);
+    width: 40px; height: 40px; border-radius: 999px;
+    background: var(--navy); border: 1px solid rgba(35,181,232,.7);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 18px rgba(35,181,232,.4);
+  }
+  #traceNode svg{ transition: opacity .2s; }
+  #traceLabel{
+    position: absolute; left: -10px; top: 50%; transform: translate(-100%,-50%) rotate(0deg);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .18em; color: var(--neon);
+    white-space: nowrap;
+  }
+
+  /* ---- Reels & Insights: tarjetas verticales tipo Reels/Shorts ---- */
+  .reel-card{
+    position: relative; overflow: hidden; cursor: pointer;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: border-color .4s, box-shadow .4s, transform .45s cubic-bezier(.2,.8,.2,1);
+  }
+  .reel-card:hover{
+    border-color: rgba(35,181,232,.55);
+    box-shadow: 0 24px 50px -20px rgba(35,181,232,.35), 0 0 40px rgba(35,181,232,.15);
+    transform: translateY(-6px);
+  }
+  .reel-card img{
+    transition: transform 1s cubic-bezier(.16,1,.3,1), filter .6s;
+    filter: saturate(.85) brightness(.8);
+  }
+  .reel-card:hover img{ transform: scale(1.08); filter: saturate(1.05) brightness(.95); }
+  .reel-card .overlay{ background: linear-gradient(180deg, transparent 20%, rgba(8,26,56,.55) 65%, rgba(8,26,56,.97) 100%); }
+  .reel-badge{
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .1em;
+    color: var(--neon); background: rgba(8,26,56,.6); backdrop-filter: blur(6px);
+    border: 1px solid rgba(35,181,232,.35);
+  }
+  .reel-play{
+    width: 58px; height: 58px; border-radius: 999px;
+    background: rgba(8,26,56,.55); border: 1px solid rgba(35,181,232,.6); backdrop-filter: blur(6px);
+    opacity: 0; transform: scale(.7);
+    transition: opacity .4s, transform .4s cubic-bezier(.34,1.56,.64,1), background .4s, box-shadow .4s;
+  }
+  .reel-card:hover .reel-play{
+    opacity: 1; transform: scale(1);
+    background: var(--neon); box-shadow: 0 0 30px rgba(35,181,232,.65);
+  }
+  .reel-play svg{ color: var(--neon); transition: color .4s; }
+  .reel-card:hover .reel-play svg{ color: var(--navy); }
+
+  /* ---- Metodología: cita + pilares interactivos ---- */
+  .quote-mark{
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    color: transparent; -webkit-text-stroke: 1.5px rgba(35,181,232,.5); line-height: .7;
+  }
+  .pillar-pill{
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.02);
+    transition: border-color .35s, background .35s, color .35s, transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .pillar-pill .pillar-num{ color: var(--neon); transition: color .35s; }
+  .pillar-pill:hover, .pillar-pill.active{
+    border-color: rgba(35,181,232,.6);
+    background: rgba(35,181,232,.08);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+  .pillar-panel{ transition: opacity .3s ease; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body class="noise">
+
+<!-- ============ NAV ============ -->
+<nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div id="navInner" class="flex items-center justify-between py-5 transition-all duration-500">
+      <a href="#inicio" class="flex items-center"><img src="assets/logo-codigo.png" alt="CÓDIGO — Creatividad Digital" class="h-7 md:h-8 w-auto"></a>
+      <div class="hidden lg:flex items-center gap-10 font-mono text-[13px] tracking-wide">
+        <a href="#inicio" class="hover:text-[var(--neon)] transition-colors">INICIO</a>
+        <a href="#nosotros" class="hover:text-[var(--neon)] transition-colors">NOSOTROS</a>
+        <a href="#servicios" class="hover:text-[var(--neon)] transition-colors">SERVICIOS</a>
+        <a href="#proyectos" class="hover:text-[var(--neon)] transition-colors">PROYECTOS</a>
+        <a href="#clientes" class="hover:text-[var(--neon)] transition-colors">CLIENTES</a>
+        <a href="#contacto" class="hover:text-[var(--neon)] transition-colors">CONTACTO</a>
+      </div>
+      <a href="#contacto" class="btn-primary magnetic hidden lg:inline-block text-sm font-medium px-6 py-2.5 rounded-full">Hablemos</a>
+      <button id="menuBtn" class="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-[6px]">
+        <span class="menu-line menu-line-1 block w-6 h-[1.5px] bg-white"></span>
+        <span class="menu-line menu-line-2 block w-6 h-[1.5px] bg-white"></span>
+        <span class="menu-line menu-line-3 block w-6 h-[1.5px] bg-white"></span>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="lg:hidden fixed inset-0 top-0 h-screen bg-[var(--navy)] translate-x-full transition-transform duration-500 ease-[cubic-bezier(.6,0,.2,1)] flex flex-col items-center justify-center gap-8 font-display text-3xl">
+    <a href="#inicio" class="mobile-link">Inicio</a>
+    <a href="#nosotros" class="mobile-link">Nosotros</a>
+    <a href="#servicios" class="mobile-link">Servicios</a>
+    <a href="#proyectos" class="mobile-link">Proyectos</a>
+    <a href="#clientes" class="mobile-link">Clientes</a>
+    <a href="#contacto" class="mobile-link">Contacto</a>
+  </div>
+</nav>
+
+<!-- ============ TRACE — elemento de firma, único indicador persistente ============ -->
+<div id="trace" class="hidden lg:block" aria-hidden="true">
+  <div id="traceLine"></div>
+  <div id="traceFill"></div>
+  <div id="traceNode">
+    <svg id="traceIcon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7l3-7z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <span id="traceLabel">INICIO</span>
+</div>
+
+<!-- ============ HERO ============ -->
+<section id="inicio" class="snap-section relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20" style="z-index:0;">
+
+  <!-- Video de fondo (referencia de YouTube — reemplazar por el video final del cliente) -->
+  <div class="hero-video-wrap">
+    <iframe
+      class="hero-video-yt"
+      src="https://player.vimeo.com/video/805863935?title=0&portrait=0&muted=1&autoplay=1&controls=0&dnt=1&loop=1&transparent=0&background=1&app_id=122963"
+      title="Video de fondo — referencia"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+    <div class="hero-video-overlay"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 w-full flex justify-center text-center">
+    <h1 data-aos="fade-up" class="headline-wrap text-[10vw] sm:text-6xl md:text-7xl lg:text-[5.2rem]">
+      <span class="headline-outline">IDEAS QUE CONECTAN.<br>DISEÑO QUE TRANSFORMA.</span>
+      <span class="headline-fill" aria-hidden="true">IDEAS QUE CONECTAN.<br>DISEÑO QUE TRANSFORMA.</span>
+    </h1>
+  </div>
+
+  <a href="#nosotros" class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 group z-10">
+    <span class="w-[1px] h-14 bg-gradient-to-b from-[var(--neon)] to-transparent relative overflow-hidden">
+      <span id="scrollDot" class="absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[var(--neon)]" style="top:0;"></span>
+    </span>
+  </a>
+</section>
+
+<!-- ============ NOSOTROS ============ -->
+<section id="nosotros" class="snap-section relative py-32 px-6 lg:px-10 min-h-screen flex items-center" style="z-index:10; background:#F4F6FA; border-radius: 40px 40px 0 0; box-shadow: 0 -20px 50px rgba(0,0,0,0.25);">
+  <div class="max-w-7xl mx-auto w-full">
+    <div class="grid lg:grid-cols-12 gap-14">
+      <div class="lg:col-span-5">
+        <p data-aos="fade-up" class="eyebrow mb-6" style="color:var(--blue-2);">QUIÉNES SOMOS</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight mb-8" style="color:var(--navy);">
+          Diseñamos con lógica.<br>Creamos con <span class="brand-go">intención.</span>
+        </h2>
+        <div data-aos="fade-up" data-aos-delay="160" class="space-y-5 leading-relaxed" style="color:#4A5568;">
+          <p>CÓDIGO nació de una convicción simple: el buen diseño no decora, resuelve. Somos un estudio de creatividad digital que combina pensamiento estratégico con ejecución precisa, para que cada marca que trabajamos no solo se vea distinta, sino que funcione mejor.</p>
+          <p>Nuestro nombre es también nuestro método. Cada proyecto parte de una estructura clara —un código— que ordena la identidad visual, el mensaje y la experiencia digital en un mismo sistema coherente.</p>
+          <p>Trabajamos con marcas que quieren dejar de competir por precio y empezar a competir por percepción.</p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 lg:pl-10">
+        <div class="grid grid-cols-2 gap-5 lg:gap-8">
+          <div data-aos="fade-up" data-aos-delay="80" class="border-t pt-6" style="border-color:rgba(8,26,56,0.12);">
+            <p class="font-display font-bold text-5xl md:text-6xl brand-go">08<span class="text-2xl align-top">+</span></p>
+            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;">AÑOS DISEÑANDO MARCAS</p>
+          </div>
+          <div data-aos="fade-up" data-aos-delay="160" class="border-t pt-6" style="border-color:rgba(8,26,56,0.12);">
+            <p class="font-display font-bold text-5xl md:text-6xl brand-go">120<span class="text-2xl align-top">+</span></p>
+            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;">PROYECTOS ENTREGADOS</p>
+          </div>
+          <div data-aos="fade-up" data-aos-delay="240" class="border-t pt-6" style="border-color:rgba(8,26,56,0.12);">
+            <p class="font-display font-bold text-5xl md:text-6xl brand-go">96%</p>
+            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;">CLIENTES QUE RENUEVAN</p>
+          </div>
+          <div data-aos="fade-up" data-aos-delay="320" class="border-t pt-6" style="border-color:rgba(8,26,56,0.12);">
+            <p class="font-display font-bold text-5xl md:text-6xl brand-go">6</p>
+            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;">DISCIPLINAS CREATIVAS</p>
+          </div>
+        </div>
+
+        <div data-aos="fade-up" data-aos-delay="400" class="mt-10 p-6 md:p-8 rounded-2xl" style="background:var(--navy); color:#fff;">
+          <p class="font-mono text-xs tracking-widest mb-3" style="color:var(--neon);">// FILOSOFÍA</p>
+          <p class="text-lg md:text-xl font-display leading-snug">
+            "No diseñamos para ganar premios. Diseñamos para que el negocio de nuestro cliente venda más, comunique mejor y se recuerde por más tiempo."
+          </p>
+          <p class="font-mono text-xs mt-4" style="color:#8592AC;">— César Alfaro, Director Creativo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section id="servicios" class="snap-section relative py-32 px-6 lg:px-10 grid-bg overflow-hidden">
+  <div id="serviciosGo" class="hero-go absolute -right-10 md:right-0 top-10 md:-top-6 text-[180px] sm:text-[260px] md:text-[340px] lg:text-[420px] select-none pointer-events-none">GO</div>
+  <div class="max-w-7xl mx-auto relative z-10">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+      <div>
+        <p data-aos="fade-up" class="eyebrow mb-6">LO QUE HACEMOS</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight">
+          Seis disciplinas.<br>Un solo <span class="brand-go">sistema.</span>
+        </h2>
+      </div>
+      <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] max-w-sm leading-relaxed">
+        Cada servicio se piensa dentro del contexto completo de la marca, nunca como una pieza aislada.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div data-aos="fade-up" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
+        <span class="font-mono text-xs text-[var(--neon)]">01</span>
+        <div class="icon-wrap w-16 h-16 rounded-2xl flex items-center justify-center my-6 border border-white/15">
+          <svg class="service-icon" width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <path d="M4 20l1.2-4.8a2 2 0 01.53-.94L15.5 4.5a2.1 2.1 0 013 3L8.74 17.27a2 2 0 01-.94.53L4 20z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M13.5 6.5l3.9 3.9" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-semibold text-2xl mb-3">Diseño Gráfico</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Sistemas visuales, piezas editoriales y diseño aplicado que traducen la estrategia de marca en imágenes que comunican al instante.</p>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="60" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
+        <span class="font-mono text-xs text-[var(--neon)]">02</span>
+        <div class="icon-wrap w-16 h-16 rounded-2xl flex items-center justify-center my-6 border border-white/15">
+          <svg class="service-icon" width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <path d="M3 19l5.5-6 4 3L20 6" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.5 6H20v5.5" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-semibold text-2xl mb-3">Marketing</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Estrategias de adquisición y crecimiento basadas en datos: pauta digital, funnels de conversión y optimización continua.</p>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="120" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
+        <span class="font-mono text-xs text-[var(--neon)]">03</span>
+        <div class="icon-wrap w-16 h-16 rounded-2xl flex items-center justify-center my-6 border border-white/15">
+          <svg class="service-icon" width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <path d="M4 5h13a2 2 0 012 2v7a2 2 0 01-2 2H10l-4.5 4V16H4a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M7 9.5h9M7 12.5h6" stroke="#23B5E8" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-semibold text-2xl mb-3">Comunicación</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Definimos el tono, el mensaje y la voz de marca para que cada punto de contacto hable el mismo idioma con el cliente correcto.</p>
+      </div>
+
+      <div data-aos="fade-up" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
+        <span class="font-mono text-xs text-[var(--neon)]">04</span>
+        <div class="icon-wrap w-16 h-16 rounded-2xl flex items-center justify-center my-6 border border-white/15">
+          <svg class="service-icon" width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="14" height="14" rx="2" stroke="#23B5E8" stroke-width="1.6"/>
+            <path d="M17 9.5l4-2.3v9.6l-4-2.3" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9 9.5l3 2.5-3 2.5z" stroke="#23B5E8" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-semibold text-2xl mb-3">Contenido Digital</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Producción fotográfica, video y contenido para redes que mantiene a la marca presente, coherente y relevante cada semana.</p>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="60" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
+        <span class="font-mono text-xs text-[var(--neon)]">05</span>
+        <div class="icon-wrap w-16 h-16 rounded-2xl flex items-center justify-center my-6 border border-white/15">
+          <svg class="service-icon" width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3l2.6 5.8L21 9.6l-4.5 4.2 1.2 6.2L12 16.9l-5.7 3.1 1.2-6.2L3 9.6l6.4-.8L12 3z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-semibold text-2xl mb-3">Branding</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Construcción de identidad desde cero: naming, logotipo, sistema visual y manual de marca listo para escalar.</p>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="120" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
+        <span class="font-mono text-xs text-[var(--neon)]">06</span>
+        <div class="icon-wrap w-16 h-16 rounded-2xl flex items-center justify-center my-6 border border-white/15">
+          <svg class="service-icon" width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18h6M10 21h4" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M12 3a6.5 6.5 0 00-3.6 11.9c.5.4.8.9.8 1.5v.1h5.6v-.1c0-.6.3-1.1.8-1.5A6.5 6.5 0 0012 3z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-semibold text-2xl mb-3">Soluciones Creativas</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Proyectos a medida cuando el reto no encaja en una categoría: activaciones, experiencias digitales y productos de marca.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PORTAFOLIO ============ -->
+<section id="proyectos" class="snap-section relative py-32 px-6 lg:px-10">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+      <div>
+        <p data-aos="fade-up" class="eyebrow mb-6">PORTAFOLIO</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight">
+          Proyectos que <span class="brand-go">hablan</span><br>por sí solos.
+        </h2>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6" id="portfolioGrid">
+      <div data-aos="fade-up" class="port-card group rounded-2xl aspect-[4/5] md:row-span-2"
+           data-title="Nortia Bank" data-cat="Branding · Diseño Digital" data-client="Nortia Bank"
+           data-obj="Reposicionar una banca tradicional como una fintech confiable para nuevas generaciones."
+           data-desc="Rediseñamos por completo la identidad de Nortia Bank: del logotipo al sistema de interfaz de su app. El resultado fue un incremento del 34% en descargas de la aplicación durante el primer trimestre tras el relanzamiento."
+           data-images='[&quot;https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1200&auto=format&fit=crop&quot;]'>
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Nortia Bank" class="w-full h-full object-cover">
+        <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
+          <span class="font-mono text-xs text-[var(--neon)] mb-2">BRANDING · DIGITAL</span>
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-2xl">Nortia Bank</h3>
+            <span class="plus rounded-full flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="80" class="port-card group rounded-2xl aspect-[4/3]"
+           data-title="Verde Café" data-cat="Identidad de Marca" data-client="Verde Café Co."
+           data-obj="Crear una marca de café de especialidad que compitiera visualmente con cadenas internacionales."
+           data-desc="Desarrollamos identidad, empaque y experiencia de punto de venta para Verde Café. La nueva imagen permitió abrir tres sucursales adicionales en un año, apoyadas en un sistema visual replicable."
+           data-images='[&quot;https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1200&auto=format&fit=crop&quot;]'>
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Verde Café" class="w-full h-full object-cover">
+        <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
+          <span class="font-mono text-xs text-[var(--neon)] mb-2">IDENTIDAD DE MARCA</span>
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-2xl">Verde Café</h3>
+            <span class="plus rounded-full flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="160" class="port-card group rounded-2xl aspect-[4/3]"
+           data-title="Lúmina Studios" data-cat="Marketing Digital" data-client="Lúmina Studios"
+           data-obj="Aumentar la generación de leads calificados para un estudio de arquitectura de lujo."
+           data-desc="Diseñamos y ejecutamos una estrategia de contenido y pauta digital enfocada en portafolio visual. Los leads calificados aumentaron 2.4x en seis meses, con un costo por adquisición 40% menor."
+           data-images='[&quot;https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop&quot;]'>
+        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Lúmina Studios" class="w-full h-full object-cover">
+        <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
+          <span class="font-mono text-xs text-[var(--neon)] mb-2">MARKETING DIGITAL</span>
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-2xl">Lúmina Studios</h3>
+            <span class="plus rounded-full flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <div data-aos="fade-up" class="port-card group rounded-2xl aspect-[4/3]"
+           data-title="Raíz Orgánica" data-cat="Branding · Empaque" data-client="Raíz Orgánica"
+           data-obj="Diferenciar una línea de alimentos orgánicos en un anaquel saturado de competencia."
+           data-desc="El nuevo sistema de empaque de Raíz Orgánica usa ilustración botánica e iconografía clara de beneficios. Las ventas en punto de venta crecieron 27% en los primeros cuatro meses."
+           data-images='[&quot;https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1506617420156-8e4536971650?q=80&w=1200&auto=format&fit=crop&quot;]'>
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Raíz Orgánica" class="w-full h-full object-cover">
+        <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
+          <span class="font-mono text-xs text-[var(--neon)] mb-2">BRANDING · EMPAQUE</span>
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-2xl">Raíz Orgánica</h3>
+            <span class="plus rounded-full flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="80" class="port-card group rounded-2xl aspect-[4/3]"
+           data-title="Órbita Tech" data-cat="Contenido Digital" data-client="Órbita Tech"
+           data-obj="Humanizar la comunicación de una empresa de software B2B para audiencias no técnicas."
+           data-desc="Creamos una línea editorial de video y redes que tradujo funcionalidades técnicas en beneficios claros. El engagement en LinkedIn se multiplicó por 3.1 en el primer trimestre de campaña."
+           data-images='[&quot;https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop&quot;]'>
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Órbita Tech" class="w-full h-full object-cover">
+        <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
+          <span class="font-mono text-xs text-[var(--neon)] mb-2">CONTENIDO DIGITAL</span>
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-2xl">Órbita Tech</h3>
+            <span class="plus rounded-full flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ANTES / DESPUÉS — carrusel de 3 proyectos ============ -->
+<section id="transformacion" class="snap-section relative py-32 px-6 lg:px-10 grid-bg">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+      <div class="text-center md:text-left mx-auto md:mx-0">
+        <p data-aos="fade-up" class="eyebrow mb-6 justify-center md:justify-start flex">TRANSFORMACIÓN REAL</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl">Antes y <span class="brand-go">después.</span></h2>
+        <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] mt-5 max-w-xl">Arrastra la línea sobre cada proyecto para ver la transformación. Usa las flechas o los puntos para navegar entre los tres casos.</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="200" class="hidden md:flex items-center gap-3 flex-shrink-0">
+        <button id="baPrev" aria-label="Proyecto anterior" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="baNext" aria-label="Siguiente proyecto" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+
+    <div data-aos="fade-up" data-aos-delay="240" class="relative">
+      <div class="overflow-hidden rounded-2xl border border-white/10">
+        <div id="baTrack" class="flex transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)]">
+          <div class="ba-slide w-full flex-shrink-0">
+            <div class="ba-wrap aspect-[16/10] md:aspect-[16/8]">
+              <img src="https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1600&auto=format&fit=crop" alt="Verde Café antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75">
+              <div class="ba-after"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop" alt="Verde Café después del rediseño" class="ba-after-img"></div>
+              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full">ANTES</span>
+              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full">DESPUÉS</span>
+              <span class="absolute bottom-5 left-5 font-display font-semibold text-lg bg-black/40 backdrop-blur px-4 py-2 rounded-full">Verde Café</span>
+              <div class="ba-handle"><div class="knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            </div>
+          </div>
+          <div class="ba-slide w-full flex-shrink-0">
+            <div class="ba-wrap aspect-[16/10] md:aspect-[16/8]">
+              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1600&auto=format&fit=crop" alt="Nortia Bank antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75">
+              <div class="ba-after"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1600&auto=format&fit=crop" alt="Nortia Bank después del rediseño" class="ba-after-img"></div>
+              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full">ANTES</span>
+              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full">DESPUÉS</span>
+              <span class="absolute bottom-5 left-5 font-display font-semibold text-lg bg-black/40 backdrop-blur px-4 py-2 rounded-full">Nortia Bank</span>
+              <div class="ba-handle"><div class="knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            </div>
+          </div>
+          <div class="ba-slide w-full flex-shrink-0">
+            <div class="ba-wrap aspect-[16/10] md:aspect-[16/8]">
+              <img src="https://images.unsplash.com/photo-1506617420156-8e4536971650?q=80&w=1600&auto=format&fit=crop" alt="Raíz Orgánica antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75">
+              <div class="ba-after"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop" alt="Raíz Orgánica después del rediseño" class="ba-after-img"></div>
+              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full">ANTES</span>
+              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full">DESPUÉS</span>
+              <span class="absolute bottom-5 left-5 font-display font-semibold text-lg bg-black/40 backdrop-blur px-4 py-2 rounded-full">Raíz Orgánica</span>
+              <div class="ba-handle"><div class="knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex md:hidden items-center justify-center gap-3 mt-6">
+        <button id="baPrevMobile" aria-label="Proyecto anterior" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="baNextMobile" aria-label="Siguiente proyecto" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <div id="baDots" class="flex items-center justify-center gap-2.5 mt-6"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIENTES ============ -->
+<section id="clientes" class="snap-section relative py-24 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+    <div>
+      <p data-aos="fade-up" class="eyebrow mb-6">CONFÍAN EN NOSOTROS</p>
+      <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl">Marcas que ya <span class="brand-go">conectan.</span></h2>
+    </div>
+    <div data-aos="fade-up" data-aos-delay="160" class="flex items-center gap-3 flex-shrink-0">
+      <button id="clientsPrev" aria-label="Ver logo anterior" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button id="clientsNext" aria-label="Ver logo siguiente" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  </div>
+  <div id="clientsWrap" class="marquee-wrap relative">
+    <div class="absolute left-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-r from-[var(--navy)] to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-24 md:w-40 bg-gradient-to-l from-[var(--navy)] to-transparent z-10 pointer-events-none"></div>
+    <div id="clientsTrack" class="marquee-track py-6">
+      <div class="flex items-center gap-16 px-8">
+        <img src="assets/logos/nortia.png" alt="Nortia Bank" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity">
+        <img src="assets/logos/verde-cafe.png" alt="Verde Café" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity">
+        <img src="assets/logos/lumina.png" alt="Lúmina Studios" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity">
+        <img src="assets/logos/raiz.png" alt="Raíz Orgánica" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity">
+        <img src="assets/logos/orbita.png" alt="Órbita Tech" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity">
+        <img src="assets/logos/plata-grupo.png" alt="Plata Grupo" class="h-8 w-auto opacity-70 hover:opacity-100 transition-opacity">
+      </div>
+      <div class="flex items-center gap-16 px-8" aria-hidden="true">
+        <img src="assets/logos/nortia.png" alt="" class="h-8 w-auto opacity-70">
+        <img src="assets/logos/verde-cafe.png" alt="" class="h-8 w-auto opacity-70">
+        <img src="assets/logos/lumina.png" alt="" class="h-8 w-auto opacity-70">
+        <img src="assets/logos/raiz.png" alt="" class="h-8 w-auto opacity-70">
+        <img src="assets/logos/orbita.png" alt="" class="h-8 w-auto opacity-70">
+        <img src="assets/logos/plata-grupo.png" alt="" class="h-8 w-auto opacity-70">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESO ============ -->
+<section id="proceso" class="snap-section relative py-32 px-6 lg:px-10">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-20">
+      <p data-aos="fade-up" class="eyebrow mb-6">CÓMO TRABAJAMOS</p>
+      <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl max-w-2xl">Un método, no una <span class="brand-go">improvisación.</span></h2>
+    </div>
+    <div class="grid md:grid-cols-4 gap-8 md:gap-6">
+      <div data-aos="fade-up" data-aos-delay="0" class="border-t border-white/10 pt-8">
+        <span class="process-num text-6xl md:text-7xl">01</span>
+        <h3 class="font-display font-semibold text-xl mt-6 mb-3">Escuchamos</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Entendemos el negocio, la audiencia y el problema real antes de proponer una sola idea visual.</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="100" class="border-t border-white/10 pt-8">
+        <span class="process-num text-6xl md:text-7xl">02</span>
+        <h3 class="font-display font-semibold text-xl mt-6 mb-3">Pensamos</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Definimos la estrategia y el territorio creativo: qué debe decir la marca y cómo debe sentirse.</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="200" class="border-t border-white/10 pt-8">
+        <span class="process-num text-6xl md:text-7xl">03</span>
+        <h3 class="font-display font-semibold text-xl mt-6 mb-3">Creamos</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Diseñamos, producimos y refinamos cada pieza hasta que ejecuta exactamente lo que se planeó.</p>
+      </div>
+      <div data-aos="fade-up" data-aos-delay="300" class="border-t border-white/10 pt-8">
+        <span class="process-num text-6xl md:text-7xl">04</span>
+        <h3 class="font-display font-semibold text-xl mt-6 mb-3">Conectamos</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed">Lanzamos, medimos resultados y ajustamos con datos reales para que la marca siga creciendo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="cta-idea" class="snap-section relative py-32 px-6 lg:px-10 overflow-hidden">
+  <div class="max-w-5xl mx-auto text-center relative z-10">
+    <p data-aos="fade-up" class="eyebrow mb-8 justify-center flex">SIGUIENTE PASO</p>
+    <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05]">
+      ¿TIENES UNA IDEA?<br><span class="brand-go">HAGÁMOSLA REALIDAD.</span>
+    </h2>
+    <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] mt-8 max-w-lg mx-auto text-lg">Cuéntanos en qué etapa está tu marca. Nosotros te decimos exactamente qué necesita para dar el siguiente paso.</p>
+    <div data-aos="fade-up" data-aos-delay="240" class="mt-10">
+      <a href="#contacto" class="btn-primary magnetic rounded-full px-10 py-5 font-medium inline-flex items-center gap-2 text-lg">
+        AGENDAR UNA LLAMADA
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+  <div id="ctaGo" class="hero-go absolute left-1/2 -translate-x-1/2 -bottom-20 text-[200px] sm:text-[300px] opacity-30 select-none pointer-events-none">GO</div>
+</section>
+
+<!-- ============ REELS & INSIGHTS ============ -->
+<section id="insights" class="snap-section relative py-32 px-6 lg:px-10 grid-bg">
+  <div class="max-w-7xl mx-auto">
+    <div data-aos="fade-up" class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 border border-[var(--neon)]/30 bg-[var(--neon)]/5 font-mono text-xs tracking-[0.2em] text-[var(--neon)] mb-8">
+      [ CÓDIGO_INSIGHTS ]
+    </div>
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+      <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight max-w-2xl">
+        Pensamiento Creativo & <span class="brand-go">Estrategia en Acción.</span>
+      </h2>
+      <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] max-w-sm leading-relaxed">
+        Contenido corto pensado como sistema: cada pieza aplica estrategia, innovación visual y datos reales para escalar negocios, no solo para sumar vistas.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a href="#" target="_blank" rel="noopener" data-aos="fade-up" class="reel-card group relative rounded-2xl aspect-[9/16] block">
+        <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=800&h=1400&auto=format&fit=crop" alt="Reel: Estrategia y ROI" class="absolute inset-0 w-full h-full object-cover">
+        <div class="overlay absolute inset-0"></div>
+        <span class="reel-badge absolute top-4 left-4 rounded-full px-3 py-1.5">[ Estrategia & ROI ]</span>
+        <div class="reel-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-6">
+          <h3 class="font-display font-semibold text-xl mb-2">Contenido que sí vende</h3>
+          <p class="text-[var(--grey)] text-sm leading-relaxed">Cómo convertimos un calendario editorial en un motor de resultados medibles.</p>
+        </div>
+      </a>
+
+      <a href="#" target="_blank" rel="noopener" data-aos="fade-up" data-aos-delay="80" class="reel-card group relative rounded-2xl aspect-[9/16] block">
+        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&h=1400&auto=format&fit=crop" alt="Reel: Innovación Visual" class="absolute inset-0 w-full h-full object-cover">
+        <div class="overlay absolute inset-0"></div>
+        <span class="reel-badge absolute top-4 left-4 rounded-full px-3 py-1.5">[ Innovación Visual ]</span>
+        <div class="reel-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-6">
+          <h3 class="font-display font-semibold text-xl mb-2">Diseño que rompe el scroll</h3>
+          <p class="text-[var(--grey)] text-sm leading-relaxed">Detrás de escena de las piezas visuales que detienen el pulgar en tres segundos.</p>
+        </div>
+      </a>
+
+      <a href="#" target="_blank" rel="noopener" data-aos="fade-up" data-aos-delay="160" class="reel-card group relative rounded-2xl aspect-[9/16] block">
+        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&h=1400&auto=format&fit=crop" alt="Reel: Sistemas de Marca" class="absolute inset-0 w-full h-full object-cover">
+        <div class="overlay absolute inset-0"></div>
+        <span class="reel-badge absolute top-4 left-4 rounded-full px-3 py-1.5">[ Sistemas de Marca ]</span>
+        <div class="reel-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-6">
+          <h3 class="font-display font-semibold text-xl mb-2">Marcas hechas para escalar</h3>
+          <p class="text-[var(--grey)] text-sm leading-relaxed">El sistema visual detrás de identidades que crecen sin perder consistencia.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METODOLOGÍA — CITA & PILARES INTERACTIVOS ============ -->
+<section id="metodologia" class="snap-section relative py-32 px-6 lg:px-10 overflow-hidden" style="background:var(--navy-2); border-top:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
+  <div class="max-w-6xl mx-auto relative z-10">
+    <p data-aos="fade-up" class="eyebrow mb-10">CÓMO OPERA EL ESTUDIO</p>
+
+    <div data-aos="fade-up" data-aos-delay="80" class="grid md:grid-cols-[auto,1fr] gap-6 md:gap-8 mb-20 items-start">
+      <span class="quote-mark text-7xl md:text-8xl leading-none">&ldquo;</span>
+      <blockquote class="font-display font-semibold text-2xl md:text-3xl lg:text-4xl leading-tight max-w-3xl">
+        El diseño no es para ganar premios, es el punto donde la estrategia, la emoción y la tecnología se cruzan para que un negocio venda más.
+        <footer class="mt-6 font-mono text-xs tracking-[0.2em] text-[var(--neon)] not-italic">— DIRECCIÓN CREATIVA, CÓDIGO</footer>
+      </blockquote>
+    </div>
+
+    <div data-aos="fade-up" data-aos-delay="160" class="border border-white/10 rounded-2xl p-6 md:p-10">
+      <div class="flex flex-col sm:flex-row gap-3 mb-8" role="tablist" aria-label="Metodología de trabajo">
+        <button type="button" class="pillar-pill active rounded-full px-5 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2" data-pillar="entender" role="tab" aria-selected="true">
+          <span class="pillar-num">01.</span> ENTENDER
+        </button>
+        <button type="button" class="pillar-pill rounded-full px-5 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2" data-pillar="estructurar" role="tab" aria-selected="false">
+          <span class="pillar-num">02.</span> ESTRUCTURAR
+        </button>
+        <button type="button" class="pillar-pill rounded-full px-5 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2" data-pillar="escalar" role="tab" aria-selected="false">
+          <span class="pillar-num">03.</span> ESCALAR
+        </button>
+      </div>
+
+      <div class="relative min-h-[7rem]">
+        <div class="pillar-panel" data-pillar="entender" role="tabpanel">
+          <p class="text-[var(--grey)] leading-relaxed max-w-2xl">Auditamos el negocio, la audiencia y el contexto competitivo antes de diseñar una sola pieza. Aquí definimos qué problema real está resolviendo la marca y qué la hace distinta.</p>
+        </div>
+        <div class="pillar-panel hidden" data-pillar="estructurar" role="tabpanel">
+          <p class="text-[var(--grey)] leading-relaxed max-w-2xl">Traducimos esa comprensión en un sistema: territorio creativo, arquitectura de contenido y reglas de marca que hacen que cada pieza futura sea consistente y rápida de producir.</p>
+        </div>
+        <div class="pillar-panel hidden" data-pillar="escalar" role="tabpanel">
+          <p class="text-[var(--grey)] leading-relaxed max-w-2xl">Lanzamos, medimos y ajustamos con datos reales. El sistema se vuelve repetible: más contenido, más canales y más resultados sin perder identidad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACTO / FOOTER ============ -->
+<footer id="contacto" class="snap-section relative pt-28 pb-10 px-6 lg:px-10 border-t border-white/10">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-16 mb-24">
+      <div>
+        <p data-aos="fade-up" class="eyebrow mb-6">HABLEMOS</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl mb-8 leading-tight">Cuéntanos<br>tu <span class="brand-go">proyecto.</span></h2>
+        <p data-aos="fade-up" data-aos-delay="120" class="text-[var(--grey)] leading-relaxed max-w-md mb-10">Respondemos en menos de 24 horas hábiles. Sin formularios eternos, sin llamadas de venta innecesarias — solo una conversación honesta sobre tu marca.</p>
+        <div data-aos="fade-up" data-aos-delay="160" class="space-y-5 font-mono text-sm">
+          <a href="mailto:hola@somoscodigo.com" class="flex items-center gap-3 hover:text-[var(--neon)] transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.5"/></svg>
+            hola@somoscodigo.com
+          </a>
+          <a href="tel:+50212345678" class="flex items-center gap-3 hover:text-[var(--neon)] transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.5"/></svg>
+            +502 1234 5678
+          </a>
+          <div class="flex items-center gap-3 text-[var(--grey)]">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+            Ciudad de Guatemala, Guatemala
+          </div>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="200" class="flex items-center gap-4 mt-10">
+          <a href="#" aria-label="Instagram" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6.5 8.5v9M6.5 5.5v.01M11.5 17.5v-5a2.5 2.5 0 015 0v5M11.5 12.5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/></svg></a>
+          <a href="#" aria-label="Behance" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7h6M4 7v10h6a3 3 0 100-6H4M4 11h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 13a4 4 0 108 0c0-2-1.5-3.5-4-3.5S14 11 14 13z" stroke="currentColor" stroke-width="1.5"/><path d="M15 9.5h6" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        </div>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="120">
+        <form id="contactForm" class="space-y-5" onsubmit="handleFormSubmit(event)">
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="fname" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide">NOMBRE</label>
+              <input id="fname" type="text" required placeholder="Tu nombre" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm">
+            </div>
+            <div>
+              <label for="femail" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide">CORREO</label>
+              <input id="femail" type="email" required placeholder="tu@correo.com" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm">
+            </div>
+          </div>
+          <div>
+            <label for="fservice" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide">SERVICIO DE INTERÉS</label>
+            <select id="fservice" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm">
+              <option>Branding</option><option>Diseño Gráfico</option><option>Marketing</option>
+              <option>Comunicación</option><option>Contenido Digital</option><option>Soluciones Creativas</option>
+            </select>
+          </div>
+          <div>
+            <label for="fmsg" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide">CUÉNTANOS SOBRE TU PROYECTO</label>
+            <textarea id="fmsg" required rows="4" placeholder="¿Qué necesitas lograr?" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm resize-none"></textarea>
+          </div>
+          <button type="submit" class="btn-primary magnetic rounded-full px-8 py-4 font-medium w-full sm:w-auto inline-flex items-center justify-center gap-2">
+            ENVIAR MENSAJE
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p id="formNote" class="font-mono text-xs text-[var(--neon)] hidden">Mensaje enviado. Te contactaremos pronto.</p>
+        </form>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10 font-mono text-xs text-[var(--grey-dim)]">
+      <span>© 2026 CÓDIGO — CREATIVIDAD DIGITAL. TODOS LOS DERECHOS RESERVADOS.</span>
+      <span>GUATEMALA</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MODAL PORTAFOLIO ============ -->
+<div id="projectModal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-bg absolute inset-0" onclick="closeModal()"></div>
+  <div class="relative z-10 h-full overflow-y-auto flex items-start md:items-center justify-center p-4 md:p-8">
+    <div id="modalCard" class="bg-[var(--navy-2)] border border-white/10 rounded-2xl max-w-4xl w-full my-8 overflow-hidden">
+
+      <!-- Carrusel de imágenes -->
+      <div class="relative">
+        <div id="modalCarouselViewport" class="overflow-hidden">
+          <div id="modalCarouselTrack" class="flex transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)]"></div>
+        </div>
+
+        <button id="modalPrev" aria-label="Imagen anterior" class="absolute top-1/2 left-4 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 backdrop-blur flex items-center justify-center hover:bg-[var(--neon)] hover:text-[var(--navy)] transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button id="modalNext" aria-label="Imagen siguiente" class="absolute top-1/2 right-4 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 backdrop-blur flex items-center justify-center hover:bg-[var(--neon)] hover:text-[var(--navy)] transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <button onclick="closeModal()" aria-label="Cerrar y volver al portafolio" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/50 backdrop-blur flex items-center justify-center hover:bg-[var(--neon)] hover:text-[var(--navy)] transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <div id="modalDots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2"></div>
+      </div>
+
+      <div class="p-8 md:p-10">
+        <span id="modalCat" class="font-mono text-xs text-[var(--neon)] tracking-widest"></span>
+        <h3 id="modalTitle" class="font-display font-bold text-3xl md:text-4xl mt-3 mb-6"></h3>
+        <div class="grid sm:grid-cols-2 gap-8 mb-8">
+          <div><p class="font-mono text-xs text-[var(--grey-dim)] mb-2 tracking-wide">CLIENTE</p><p id="modalClient" class="text-white"></p></div>
+          <div><p class="font-mono text-xs text-[var(--grey-dim)] mb-2 tracking-wide">OBJETIVO</p><p id="modalObj" class="text-white"></p></div>
+        </div>
+        <p id="modalDesc" class="text-[var(--grey)] leading-relaxed mb-8"></p>
+        <button onclick="closeModal()" class="btn-outline rounded-full px-6 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          VOLVER AL PORTAFOLIO
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCRIPTS ============ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script>
+  AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 60 });
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Lenis + scroll-snap (proximity: el usuario mantiene control total) ----
+  let lenis;
+  if (!prefersReducedMotion) {
+    document.documentElement.classList.add('snap-enabled');
+    lenis = new Lenis({ duration: 1.1, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+    (function raf(time){ lenis.raf(time); requestAnimationFrame(raf); })();
+    lenis.on('scroll', () => { if (window.ScrollTrigger) ScrollTrigger.update(); });
+  }
+  function pauseSnapScroll(){ document.documentElement.classList.remove('snap-enabled'); if (lenis) lenis.stop(); }
+  function resumeSnapScroll(){ if (!prefersReducedMotion) document.documentElement.classList.add('snap-enabled'); if (lenis) lenis.start(); }
+
+  // ---- Smooth anchor links ----
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const id = link.getAttribute('href');
+      if (id.length > 1) {
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          if (lenis) lenis.scrollTo(target, { offset: -40 });
+          else target.scrollIntoView({ behavior: 'smooth' });
+          closeMobileMenu();
+        }
+      } else {
+        // Enlaces placeholder (ej. redes sociales sin URL real todavía):
+        // no deben saltar al inicio de la página.
+        e.preventDefault();
+      }
+    });
+  });
+
+  // ---- Clientes: marquee automático hacia la izquierda + flechas manuales ----
+  (function initClientsMarquee(){
+    const wrap = document.getElementById('clientsWrap');
+    const track = document.getElementById('clientsTrack');
+    const prevBtn = document.getElementById('clientsPrev');
+    const nextBtn = document.getElementById('clientsNext');
+    if (!wrap || !track || !prevBtn || !nextBtn) return;
+
+    const AUTO_SPEED = 36; // px por segundo
+    let pos = 0;            // posición actual en px (negativo = movido a la izquierda)
+    let setWidth = 0;       // ancho de un solo set de logos (el track tiene 2 sets duplicados)
+    let logoStep = 160;     // distancia aproximada de un logo (se recalcula)
+    let hovering = false;
+    let manualPause = false;
+    let manualTimeoutId = null;
+    let lastTime = null;
+
+    function measure(){
+      const firstSet = track.children[0];
+      if (!firstSet) return;
+      setWidth = firstSet.getBoundingClientRect().width;
+      const count = firstSet.children.length || 1;
+      logoStep = setWidth / count;
+    }
+    window.addEventListener('load', measure);
+    window.addEventListener('resize', measure);
+    setTimeout(measure, 150);
+
+    function applyTransform(){ track.style.transform = `translateX(${pos}px)`; }
+
+    function tick(time){
+      if (lastTime === null) lastTime = time;
+      const dt = (time - lastTime) / 1000;
+      lastTime = time;
+      if (!hovering && !manualPause && !prefersReducedMotion && setWidth > 0) {
+        pos -= AUTO_SPEED * dt;
+        if (pos <= -setWidth) pos += setWidth;
+        applyTransform();
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    wrap.addEventListener('mouseenter', () => { hovering = true; });
+    wrap.addEventListener('mouseleave', () => { hovering = false; });
+
+    function step(direction){
+      // direction: 1 = avanzar (izquierda), -1 = retroceder (derecha)
+      manualPause = true;
+      pos += direction === 1 ? -logoStep : logoStep;
+      if (setWidth > 0) {
+        if (pos <= -setWidth) pos += setWidth;
+        if (pos > 0) pos -= setWidth;
+      }
+      track.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1)';
+      applyTransform();
+      clearTimeout(manualTimeoutId);
+      manualTimeoutId = setTimeout(() => {
+        track.style.transition = '';
+        manualPause = false;
+      }, 700);
+    }
+    prevBtn.addEventListener('click', () => step(-1));
+    nextBtn.addEventListener('click', () => step(1));
+  })();
+
+  // ---- Nav shrink on scroll ----
+  const nav = document.getElementById('mainNav');
+  const navInner = document.getElementById('navInner');
+  const onScrollNav = () => {
+    if (window.scrollY > 40) { nav.classList.add('nav-glass'); navInner.classList.add('py-3'); navInner.classList.remove('py-5'); }
+    else { nav.classList.remove('nav-glass'); navInner.classList.add('py-5'); navInner.classList.remove('py-3'); }
+  };
+  window.addEventListener('scroll', onScrollNav); onScrollNav();
+
+  // ---- Mobile menu ----
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function closeMobileMenu(){ menuBtn.classList.remove('menu-open'); mobileMenu.classList.add('translate-x-full'); document.body.style.overflow = ''; }
+  menuBtn.addEventListener('click', () => {
+    const isOpen = menuBtn.classList.toggle('menu-open');
+    if (isOpen) { mobileMenu.classList.remove('translate-x-full'); document.body.style.overflow = 'hidden'; }
+    else closeMobileMenu();
+  });
+  document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMobileMenu));
+
+  // ---- Hero: parallax simple del wordmark + scroll dot ----
+  gsap.to('#serviciosGo', { y: 100, scrollTrigger: { trigger: '#servicios', start: 'top bottom', end: 'bottom top', scrub: 1 } });
+  gsap.to('#scrollDot', { top: '100%', repeat: -1, duration: 1.6, ease: 'power1.inOut' });
+  gsap.to('#ctaGo', { y: -50, scrollTrigger: { trigger: '#ctaGo', start: 'top bottom', end: 'bottom top', scrub: 1 } });
+
+  // ---- Titular hero: en pantallas táctiles (sin hover), el tap activa el relleno ----
+  if (!window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.headline-wrap').forEach(el => {
+      el.addEventListener('click', () => el.classList.toggle('is-active'));
+    });
+  }
+
+  // ---- Magnetic buttons: único micro-detalle interactivo en los CTA ----
+  if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      const moveX = gsap.quickTo(btn, 'x', { duration: 0.5, ease: 'power3' });
+      const moveY = gsap.quickTo(btn, 'y', { duration: 0.5, ease: 'power3' });
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        moveX((e.clientX - r.left - r.width / 2) * 0.35);
+        moveY((e.clientY - r.top - r.height / 2) * 0.35);
+      });
+      btn.addEventListener('mouseleave', () => { moveX(0); moveY(0); });
+    });
+  }
+
+  // ---- Portfolio image subtle parallax ----
+  document.querySelectorAll('.port-card img').forEach(img => {
+    gsap.fromTo(img, { y: -20 }, { y: 20, ease: 'none', scrollTrigger: { trigger: img, start: 'top bottom', end: 'bottom top', scrub: 1 } });
+  });
+
+  // ---- Portfolio modal (con carrusel de imágenes y transición fluida) ----
+  const modal = document.getElementById('projectModal');
+  const modalCard = document.getElementById('modalCard');
+  const carouselTrack = document.getElementById('modalCarouselTrack');
+  const carouselViewport = document.getElementById('modalCarouselViewport');
+  const modalDotsWrap = document.getElementById('modalDots');
+  const modalPrevBtn = document.getElementById('modalPrev');
+  const modalNextBtn = document.getElementById('modalNext');
+  let modalImages = [];
+  let modalIndex = 0;
+  let lastFocusedEl = null;
+  let closeTimeoutId = null;
+
+  function renderModalCarousel(images, title){
+    carouselTrack.innerHTML = images.map((src, i) =>
+      `<div class="aspect-[16/10]"><img src="${src}" alt="${title} — imagen ${i + 1}"></div>`
+    ).join('');
+    carouselTrack.style.transform = 'translateX(0%)';
+    modalDotsWrap.innerHTML = '';
+    images.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'modal-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Ver imagen ' + (i + 1));
+      dot.addEventListener('click', () => goToModalSlide(i));
+      modalDotsWrap.appendChild(dot);
+    });
+    const multi = images.length > 1;
+    modalPrevBtn.classList.toggle('hidden', !multi);
+    modalNextBtn.classList.toggle('hidden', !multi);
+    modalDotsWrap.classList.toggle('hidden', !multi);
+    modalIndex = 0;
+  }
+  function goToModalSlide(i){
+    modalIndex = (i + modalImages.length) % modalImages.length;
+    carouselTrack.style.transform = `translateX(-${modalIndex * 100}%)`;
+    Array.from(modalDotsWrap.children).forEach((d, idx) => d.classList.toggle('active', idx === modalIndex));
+  }
+  modalPrevBtn.addEventListener('click', () => goToModalSlide(modalIndex - 1));
+  modalNextBtn.addEventListener('click', () => goToModalSlide(modalIndex + 1));
+
+  document.querySelectorAll('.port-card').forEach(card => {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', 'Ver proyecto ' + card.dataset.title);
+    const open = () => openProjectModal(card);
+    card.addEventListener('click', open);
+    card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  });
+
+  function openProjectModal(card){
+    if (closeTimeoutId) { clearTimeout(closeTimeoutId); closeTimeoutId = null; }
+    lastFocusedEl = document.activeElement;
+    try { modalImages = JSON.parse(card.dataset.images); } catch (err) { modalImages = [card.dataset.img].filter(Boolean); }
+    renderModalCarousel(modalImages, card.dataset.title);
+    document.getElementById('modalCat').textContent = card.dataset.cat.toUpperCase();
+    document.getElementById('modalTitle').textContent = card.dataset.title;
+    document.getElementById('modalClient').textContent = card.dataset.client;
+    document.getElementById('modalObj').textContent = card.dataset.obj;
+    document.getElementById('modalDesc').textContent = card.dataset.desc;
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    pauseSnapScroll();
+    // Doble rAF para asegurar que el navegador aplique 'display' antes de animar la transición.
+    requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('is-open')));
+  }
+
+  function closeModal(){
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    resumeSnapScroll();
+    const onEnd = (e) => {
+      if (e.target !== modalCard || e.propertyName !== 'transform') return;
+      modal.classList.add('hidden');
+      modalCard.removeEventListener('transitionend', onEnd);
+      if (closeTimeoutId) { clearTimeout(closeTimeoutId); closeTimeoutId = null; }
+      if (lastFocusedEl) lastFocusedEl.focus();
+    };
+    modalCard.addEventListener('transitionend', onEnd);
+    // Salvaguarda por si transitionend no dispara (ej. reduced-motion); se cancela si el
+    // usuario reabre el modal antes de que se cumpla, para no ocultarlo por error.
+    closeTimeoutId = setTimeout(() => { modal.classList.add('hidden'); closeTimeoutId = null; }, 500);
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+    if (!modal.classList.contains('hidden')) {
+      if (e.key === 'ArrowRight') goToModalSlide(modalIndex + 1);
+      if (e.key === 'ArrowLeft') goToModalSlide(modalIndex - 1);
+    }
+  });
+
+  // ---- Before / After carousel (3 proyectos, sliders independientes) ----
+  const baTrack = document.getElementById('baTrack');
+  const baSlides = Array.from(document.querySelectorAll('.ba-slide'));
+  const baDotsWrap = document.getElementById('baDots');
+  let baIndex = 0;
+  baSlides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'ba-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Ir al proyecto ' + (i + 1));
+    dot.addEventListener('click', () => goToSlide(i));
+    baDotsWrap.appendChild(dot);
+  });
+  const baDots = Array.from(baDotsWrap.children);
+  function goToSlide(i){
+    baIndex = (i + baSlides.length) % baSlides.length;
+    baTrack.style.transform = `translateX(-${baIndex * 100}%)`;
+    baDots.forEach((d, idx) => d.classList.toggle('active', idx === baIndex));
+  }
+  document.getElementById('baPrev').addEventListener('click', () => goToSlide(baIndex - 1));
+  document.getElementById('baNext').addEventListener('click', () => goToSlide(baIndex + 1));
+  document.getElementById('baPrevMobile').addEventListener('click', () => goToSlide(baIndex - 1));
+  document.getElementById('baNextMobile').addEventListener('click', () => goToSlide(baIndex + 1));
+
+  let baDragging = null;
+  function setBaPosition(wrap, clientX){
+    const after = wrap.querySelector('.ba-after');
+    const handle = wrap.querySelector('.ba-handle');
+    const afterImg = wrap.querySelector('.ba-after-img');
+    const rect = wrap.getBoundingClientRect();
+    let x = clientX - rect.left;
+    x = Math.max(0, Math.min(x, rect.width));
+    const pct = (x / rect.width) * 100;
+    after.style.width = pct + '%';
+    handle.style.left = pct + '%';
+    afterImg.style.width = rect.width + 'px';
+  }
+  document.querySelectorAll('.ba-wrap').forEach(wrap => {
+    const handle = wrap.querySelector('.ba-handle');
+    const startDrag = () => { baDragging = wrap; pauseSnapScroll(); };
+    handle.addEventListener('mousedown', startDrag);
+    handle.addEventListener('touchstart', startDrag, { passive: true });
+    wrap.addEventListener('click', (e) => setBaPosition(wrap, e.clientX));
+    const initBa = () => { const r = wrap.getBoundingClientRect(); if (r.width > 0) setBaPosition(wrap, r.left + r.width / 2); };
+    window.addEventListener('load', initBa);
+    setTimeout(initBa, 50);
+  });
+  function endDrag(){ if (baDragging) resumeSnapScroll(); baDragging = null; }
+  function onMove(e){ if (!baDragging) return; const clientX = e.touches ? e.touches[0].clientX : e.clientX; setBaPosition(baDragging, clientX); }
+  window.addEventListener('mouseup', endDrag);
+  window.addEventListener('touchend', endDrag);
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, { passive: true });
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.ba-wrap').forEach(wrap => { const r = wrap.getBoundingClientRect(); if (r.width > 0) setBaPosition(wrap, r.left + r.width / 2); });
+  });
+
+  // ---- Metodología: pilares interactivos (Entender / Estructurar / Escalar) ----
+  const pillarBtns = Array.from(document.querySelectorAll('.pillar-pill'));
+  const pillarPanels = Array.from(document.querySelectorAll('.pillar-panel'));
+  function setPillar(key){
+    pillarBtns.forEach(b => {
+      const active = b.dataset.pillar === key;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    pillarPanels.forEach(p => p.classList.toggle('hidden', p.dataset.pillar !== key));
+  }
+  pillarBtns.forEach(btn => {
+    btn.addEventListener('click', () => setPillar(btn.dataset.pillar));
+    if (window.matchMedia('(pointer: fine)').matches) {
+      btn.addEventListener('mouseenter', () => setPillar(btn.dataset.pillar));
+    }
+  });
+
+  // ---- Reels: parallax sutil de imágenes, igual que el portafolio ----
+  document.querySelectorAll('.reel-card img').forEach(img => {
+    gsap.fromTo(img, { y: -16 }, { y: 16, ease: 'none', scrollTrigger: { trigger: img, start: 'top bottom', end: 'bottom top', scrub: 1 } });
+  });
+
+  // ---- Contact form (visual, sin backend) ----
+  function handleFormSubmit(e){
+    e.preventDefault();
+    const note = document.getElementById('formNote');
+    note.classList.remove('hidden');
+    e.target.reset();
+    setTimeout(() => note.classList.add('hidden'), 4000);
+  }
+
+  // ---- TRACE: elemento de firma — progreso real + icono por sección ----
+  const traceSections = [
+    { id: 'inicio',        label: 'INICIO',         icon: '<path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7l3-7z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>' },
+    { id: 'nosotros',      label: 'NOSOTROS',       icon: '<circle cx="12" cy="12" r="3.4" stroke="#23B5E8" stroke-width="1.6"/><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z" stroke="#23B5E8" stroke-width="1.6"/>' },
+    { id: 'servicios',     label: 'SERVICIOS',      icon: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.3" stroke="#23B5E8" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.3" stroke="#23B5E8" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.3" stroke="#23B5E8" stroke-width="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.3" stroke="#23B5E8" stroke-width="1.6"/>' },
+    { id: 'proyectos',     label: 'PROYECTOS',      icon: '<rect x="3" y="4.5" width="18" height="15" rx="1.6" stroke="#23B5E8" stroke-width="1.6"/><circle cx="9" cy="10" r="1.6" stroke="#23B5E8" stroke-width="1.4"/><path d="M4 17l5-4.5 3 2.6 3.5-4L20 17" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>' },
+    { id: 'transformacion',label: 'TRANSFORMACIÓN', icon: '<path d="M12 3v18M6 8l-3 4 3 4M18 8l3 4-3 4" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { id: 'clientes',      label: 'CLIENTES',       icon: '<circle cx="8.5" cy="8.5" r="2.8" stroke="#23B5E8" stroke-width="1.6"/><circle cx="16" cy="9.5" r="2.2" stroke="#23B5E8" stroke-width="1.6"/><path d="M2.5 19c.6-3 2.9-5 6-5s5.4 2 6 5" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round"/><path d="M14 14.3c2.6.3 4.6 2.1 5.1 4.7" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round"/>' },
+    { id: 'proceso',       label: 'PROCESO',        icon: '<path d="M12 4a8 8 0 105.3 14" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round"/><path d="M17.5 4.5v4.5H13" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' },
+    { id: 'cta-idea',      label: 'IDEA',           icon: '<path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>' },
+    { id: 'insights',      label: 'INSIGHTS',       icon: '<path d="M8 5v14l11-7z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>' },
+    { id: 'metodologia',   label: 'METODOLOGÍA',    icon: '<path d="M12 3l9 5-9 5-9-5 9-5z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>' },
+    { id: 'contacto',      label: 'CONTACTO',       icon: '<rect x="3" y="5" width="18" height="14" rx="2" stroke="#23B5E8" stroke-width="1.6"/><path d="M3 7l9 6 9-6" stroke="#23B5E8" stroke-width="1.6"/>' },
+  ];
+  const traceFill = document.getElementById('traceFill');
+  const traceNode = document.getElementById('traceNode');
+  const traceIcon = document.getElementById('traceIcon');
+  const traceLabel = document.getElementById('traceLabel');
+  let traceCurrent = 0;
+
+  function updateTraceIcon(i){
+    if (i === traceCurrent) return;
+    traceCurrent = i;
+    const s = traceSections[i]; if (!s) return;
+    traceIcon.style.opacity = 0;
+    setTimeout(() => { traceIcon.innerHTML = s.icon; traceIcon.style.opacity = 1; }, 150);
+    traceLabel.textContent = s.label;
+  }
+  function updateTraceProgress(){
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? Math.min(1, Math.max(0, (window.scrollY || doc.scrollTop) / max)) : 0;
+    traceFill.style.height = (progress * 100) + '%';
+    traceNode.style.top = (progress * 100) + '%';
+  }
+  const traceObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = traceSections.findIndex(s => s.id === entry.target.id);
+        if (idx !== -1) updateTraceIcon(idx);
+      }
+    });
+  }, { threshold: 0.5, rootMargin: '-10% 0px -10% 0px' });
+  traceSections.forEach(s => { const el = document.getElementById(s.id); if (el) traceObserver.observe(el); });
+
+  window.addEventListener('scroll', updateTraceProgress, { passive: true });
+  window.addEventListener('resize', updateTraceProgress);
+  updateTraceProgress();
+  if (lenis) lenis.on('scroll', updateTraceProgress);
+</script>
+
+</body>
+</html>
