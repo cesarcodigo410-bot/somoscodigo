@@ -308,6 +308,61 @@
   .reel-play svg{ color: var(--neon); transition: color .4s; }
   .reel-card:hover .reel-play svg{ color: var(--navy); }
 
+  /* ===== Custom Cursor: punto + aro con inercia y stretch por scroll =====
+     La clase .custom-cursor la agrega el JS solo tras detectar un mousemove
+     real (pointerType === 'mouse'), no por matchMedia estático — así nunca
+     se queda "colgado" si el navegador reporta mal hover/pointer. */
+  html.custom-cursor,
+  html.custom-cursor a,
+  html.custom-cursor button,
+  html.custom-cursor .btn-primary,
+  html.custom-cursor .btn-outline,
+  html.custom-cursor .port-card,
+  html.custom-cursor .reel-card{ cursor: none; }
+
+  .cursor-dot{
+    position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+    margin: -3px 0 0 -3px;
+    background: var(--neon); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    mix-blend-mode: difference;
+    opacity: 0;
+    will-change: transform;
+  }
+  .cursor-ring{
+    position: fixed; top: 0; left: 0; width: 42px; height: 42px;
+    margin: -21px 0 0 -21px;
+    border: 1.5px solid var(--neon);
+    border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 18px rgba(35,181,232,.35);
+    opacity: 0;
+    transition: width .35s cubic-bezier(.16,1,.3,1), height .35s cubic-bezier(.16,1,.3,1),
+                margin .35s cubic-bezier(.16,1,.3,1), background .35s, border-color .35s, opacity .3s;
+    will-change: transform, width, height;
+  }
+  .cursor-ring.is-hover{
+    width: 74px; height: 74px; margin: -37px 0 0 -37px;
+    background: rgba(35,181,232,.08);
+  }
+  .cursor-ring.is-view{
+    width: 92px; height: 92px; margin: -46px 0 0 -46px;
+    background: rgba(35,181,232,.12);
+  }
+  .cursor-ring .cursor-text{
+    opacity: 0; transform: scale(.6);
+    transition: opacity .25s ease, transform .25s ease;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: .12em;
+    color: var(--white); text-transform: uppercase;
+    pointer-events: none; white-space: nowrap;
+  }
+  .cursor-ring.is-view .cursor-text{ opacity: 1; transform: scale(1); }
+  @media (hover: none), (pointer: coarse){
+    .cursor-dot, .cursor-ring{ display: none !important; }
+  }
+
   /* ---- Metodología: cita + pilares interactivos ---- */
   .quote-mark{
     font-family: 'Space Grotesk', sans-serif; font-weight: 700;
@@ -333,12 +388,14 @@
 </style>
 </head>
 <body class="noise">
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"><span class="cursor-text">VER</span></div>
 
 <!-- ============ NAV ============ -->
 <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div id="navInner" class="flex items-center justify-between py-5 transition-all duration-500">
-      <a href="#inicio" class="flex items-center"><img src="assets/logo-codigo.png" alt="CÓDIGO — Creatividad Digital" class="h-7 md:h-8 w-auto"></a>
+      <a href="#inicio" class="flex items-center"><img src="assets/Logo Heather.svg" alt="CÓDIGO — Creatividad Digital" class="h-7 md:h-8 w-auto"></a>
       <div class="hidden lg:flex items-center gap-10 font-mono text-[13px] tracking-wide">
         <a href="#inicio" class="hover:text-[var(--neon)] transition-colors">INICIO</a>
         <a href="#nosotros" class="hover:text-[var(--neon)] transition-colors">NOSOTROS</a>
@@ -1001,21 +1058,134 @@
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
 <script>
-  AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 60 });
-  gsap.registerPlugin(ScrollTrigger);
+  // Cada inicialización de librería externa va en su propio try/catch: si un CDN
+  // falla (bloqueador de anuncios, red lenta, firewall), ese fallo queda aislado
+  // y no detiene el resto del script (en particular, el cursor personalizado).
+  try { AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 60 }); }
+  catch (err) { console.warn('AOS no se pudo inicializar:', err); }
+
+  try { if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger); }
+  catch (err) { console.warn('GSAP/ScrollTrigger no se pudo inicializar:', err); }
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ---- Lenis + scroll-snap (proximity: el usuario mantiene control total) ----
   let lenis;
   if (!prefersReducedMotion) {
-    document.documentElement.classList.add('snap-enabled');
-    lenis = new Lenis({ duration: 1.1, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
-    (function raf(time){ lenis.raf(time); requestAnimationFrame(raf); })();
-    lenis.on('scroll', () => { if (window.ScrollTrigger) ScrollTrigger.update(); });
+    try {
+      document.documentElement.classList.add('snap-enabled');
+      lenis = new Lenis({ duration: 1.1, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      (function raf(time){ lenis.raf(time); requestAnimationFrame(raf); })();
+      lenis.on('scroll', () => { if (window.ScrollTrigger) ScrollTrigger.update(); });
+    } catch (err) {
+      console.warn('Lenis no se pudo inicializar, se usa scroll nativo:', err);
+      lenis = undefined;
+    }
   }
   function pauseSnapScroll(){ document.documentElement.classList.remove('snap-enabled'); if (lenis) lenis.stop(); }
   function resumeSnapScroll(){ if (!prefersReducedMotion) document.documentElement.classList.add('snap-enabled'); if (lenis) lenis.start(); }
+
+  // ---- Cursor personalizado: punto + aro con inercia (lerp) y stretch por velocidad de scroll ----
+  // Implementado en JS puro (sin GSAP) y envuelto en try/catch: así el cursor
+  // funciona sin importar si gsap/ScrollTrigger/Lenis cargaron correctamente,
+  // porque un fallo de CDN en esas librerías ya no puede tumbar este bloque.
+  try {
+    (function initCustomCursor(){
+      // Nota: el cursor personalizado se muestra siempre, por decisión explícita,
+      // aunque el sistema tenga activado "reducir movimiento". El resto del sitio
+      // (scroll-snap, parallax, etc.) sigue respetando esa preferencia.
+      const dot = document.querySelector('.cursor-dot');
+      const ring = document.querySelector('.cursor-ring');
+      if (!dot || !ring) return;
+
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let ringX = mouseX, ringY = mouseY;
+      let active = false;
+      const RING_EASE = 0.16; // suavizado/inercia del aro respecto al puntero
+
+      function activateCursor(){
+        if (active) return;
+        active = true;
+        document.documentElement.classList.add('custom-cursor');
+        dot.style.opacity = '1';
+        ring.style.opacity = '1';
+      }
+      function deactivateCursor(){
+        active = false;
+        document.documentElement.classList.remove('custom-cursor');
+        dot.style.opacity = '0';
+        ring.style.opacity = '0';
+      }
+
+      // Se activa con el primer movimiento real de mouse; un toque en pantalla lo desactiva.
+      // mousemove es el evento más compatible entre navegadores (a diferencia de
+      // pointermove, cuyo pointerType a veces se reporta mal en ciertos trackpads).
+      window.addEventListener('mousemove', (e) => {
+        const firstMove = !active;
+        activateCursor();
+        mouseX = e.clientX; mouseY = e.clientY;
+        if (firstMove) { ringX = mouseX; ringY = mouseY; } // sin "vuelo" inicial desde el centro
+        dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`; // el punto sigue exacto, sin retardo
+      }, { passive: true });
+      window.addEventListener('touchstart', deactivateCursor, { passive: true });
+
+      // ---- Deformación del aro según la velocidad del scroll (Lenis o nativo) ----
+      let stretchX = 1, stretchY = 1;
+      let targetStretchX = 1, targetStretchY = 1;
+
+      function clamp(min, max, val){ return Math.min(max, Math.max(min, val)); }
+
+      function applyScrollVelocity(velocity){
+        const v = clamp(-2.5, 2.5, velocity * 0.05);
+        targetStretchY = 1 + Math.abs(v) * 0.55;
+        targetStretchX = 1 - Math.min(Math.abs(v) * 0.2, 0.35);
+      }
+
+      if (lenis) {
+        try { lenis.on('scroll', (e) => applyScrollVelocity(e.velocity || 0)); }
+        catch (err) { console.warn('No se pudo enlazar el cursor a Lenis:', err); }
+      } else {
+        let lastY = window.scrollY, lastT = performance.now();
+        window.addEventListener('scroll', () => {
+          const now = performance.now();
+          const dt = Math.max(now - lastT, 1);
+          applyScrollVelocity(((window.scrollY - lastY) / dt) * 16.6);
+          lastY = window.scrollY; lastT = now;
+        }, { passive: true });
+      }
+
+      // ---- Loop de animación: inercia de posición + relajación del stretch a círculo ----
+      function tick(){
+        ringX += (mouseX - ringX) * RING_EASE;
+        ringY += (mouseY - ringY) * RING_EASE;
+
+        stretchX += (targetStretchX - stretchX) * 0.15;
+        stretchY += (targetStretchY - stretchY) * 0.15;
+        targetStretchX += (1 - targetStretchX) * 0.08; // vuelve a forma circular al detener el scroll
+        targetStretchY += (1 - targetStretchY) * 0.08;
+
+        ring.style.transform = `translate(${ringX}px, ${ringY}px) scale(${stretchX}, ${stretchY})`;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      // ---- Estados hover: enlaces, botones y tarjetas ----
+      document.querySelectorAll('a, button, .btn-primary, .btn-outline').forEach(el => {
+        el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
+      });
+      document.querySelectorAll('.port-card, .reel-card').forEach(el => {
+        el.addEventListener('mouseenter', () => ring.classList.add('is-hover', 'is-view'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('is-hover', 'is-view'));
+      });
+
+      // ---- Ocultar al salir de la ventana ----
+      document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+      document.addEventListener('mouseenter', () => { if (active) { dot.style.opacity = '1'; ring.style.opacity = '1'; } });
+    })();
+  } catch (err) {
+    console.warn('El cursor personalizado no se pudo inicializar:', err);
+  }
 
   // ---- Smooth anchor links ----
   document.querySelectorAll('a[href^="#"]').forEach(link => {
