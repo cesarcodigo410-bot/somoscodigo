@@ -440,6 +440,23 @@
     color: var(--neon); background: rgba(8,26,56,.6); backdrop-filter: blur(6px);
     border: 1px solid rgba(35,181,232,.35);
   }
+
+  /* Pantalla con PERSPECTIVA: usada cuando el marco es una fotografía real (ej. valla pasarela)
+     donde la pantalla no es un rectángulo recto sino un cuadrilátero en fuga. El tamaño base
+     (data-video-w / data-video-h, ej. 1536×336) se deforma vía matrix3d calculado en JS para
+     encajar exactamente en las 4 esquinas indicadas en data-quad. Ver script al final del body. */
+  .mockup-screen-quad{
+    position: absolute;
+    top: 0; left: 0;
+    transform-origin: 0 0;
+    overflow: hidden;
+    background: #000;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  .mockup-screen-quad.is-ready{ opacity: 1; }
+  .mockup-screen-quad video{ width: 100%; height: 100%; object-fit: cover; display: block; }
 </style>
 </head>
 <body class="noise">
@@ -877,25 +894,27 @@
             </div>
           </div>
 
-          <!-- Slide 3: Valla Pasarela — Banner especial (panorámico 3536×208) -->
+          <!-- Slide 3: Valla Pasarela — Banner especial sobre Av. Roosevelt (video 1536×336) -->
           <div class="motion-slide px-1">
             <div class="max-w-4xl mx-auto">
-              <div class="mockup-frame aspect-[3536/208]"
-                   style="--screen-top:18%; --screen-left:3%; --screen-width:94%; --screen-height:64%; --screen-radius:3px;">
-                <!-- Imagen del marco/mockup (fija): reemplazar por la fotografía real de la valla pasarela -->
-                <img class="mockup-bg" src="https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?q=80&w=1600&auto=format&fit=crop" alt="Mockup de referencia: valla pasarela panorámica">
-                <div class="mockup-screen">
-                  <!-- 🔧 ACTUALIZAR AQUÍ: variable de fuente del video/animación (Valla Pasarela, 3536×208).
-                       Solo reemplazar el src del <source>; no mover ni redimensionar este contenedor. -->
-                  <video class="w-full h-full" autoplay muted loop playsinline
+              <div class="mockup-frame aspect-[1600/1067]" id="pasarelaFrame">
+                <!-- Imagen del marco/mockup (fija): fotografía real de la valla pasarela sobre Av. Roosevelt -->
+                <img class="mockup-bg" src="assets/mockups/valla-pasarela-roosevelt.jpg" alt="Mockup de referencia: pantalla digital en la valla pasarela sobre avenida Roosevelt">
+                <!-- Contenedor de pantalla ajustado a la PERSPECTIVA real de la foto (proyección en 4 esquinas,
+                     definidas en % del marco vía data-quad="TL TR BR BL"). Si se reemplaza la fotografía,
+                     solo hay que recalcular estos 4 puntos; no tocar el JS de abajo. -->
+                <div class="mockup-screen-quad" data-quad="44.50,39.64 65.50,22.78 65.31,29.99 44.38,47.05" data-video-w="1536" data-video-h="336">
+                  <!-- 🔧 ACTUALIZAR AQUÍ: src del video/animación de la Valla Pasarela (1536×336).
+                       Solo reemplazar el src del <source>; no tocar data-quad ni el resto de la estructura. -->
+                  <video autoplay muted loop playsinline
                          poster="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop">
                     <source src="assets/video/valla-pasarela.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
               <div class="flex items-center justify-between mt-5">
-                <span class="motion-format-badge rounded-full px-3 py-1.5">VALLA PASARELA · BANNER ESPECIAL</span>
-                <span class="font-mono text-xs text-[var(--grey-dim)]">3536 × 208 px</span>
+                <span class="motion-format-badge rounded-full px-3 py-1.5">VALLA PASARELA · AV. ROOSEVELT</span>
+                <span class="font-mono text-xs text-[var(--grey-dim)]">1536 × 336 px</span>
               </div>
             </div>
           </div>
@@ -1750,6 +1769,73 @@
       if (Math.abs(diff) > 40) goTo(diff < 0 ? index + 1 : index - 1);
       startX = null;
     }, { passive: true });
+  })();
+
+  // ============ NOVEDAD: Pantalla con perspectiva real (mockup fotográfico) ============
+  // Deforma el video para que encaje exactamente en las 4 esquinas de la pantalla
+  // tal como aparece en la fotografía (perspectiva/fuga), usando una transformación
+  // proyectiva (homografía) expresada como matrix3d. No requiere recortar ni editar
+  // la imagen del mockup: solo se recalculan los 4 puntos en data-quad si se cambia la foto.
+  (function(){
+    // Resuelve la matriz 3x3 que mapea el rectángulo (0,0)-(W,0)-(W,H)-(0,H)
+    // a los 4 puntos del cuadrilátero de destino [p0..p3] (algoritmo clásico de
+    // warp proyectivo de 4 puntos, Heckbert 1989).
+    function solveQuadMatrix(W, H, p){
+      const x0=p[0][0], y0=p[0][1], x1=p[1][0], y1=p[1][1];
+      const x2=p[2][0], y2=p[2][1], x3=p[3][0], y3=p[3][1];
+      const dx1=x1-x2, dx2=x3-x2, dx3=x0-x1+x2-x3;
+      const dy1=y1-y2, dy2=y3-y2, dy3=y0-y1+y2-y3;
+      let a,b,c,d,e,f,g,h;
+      if (Math.abs(dx3) < 1e-9 && Math.abs(dy3) < 1e-9){
+        a = x1-x0; b = x2-x1; c = x0;
+        d = y1-y0; e = y2-y1; f = y0;
+        g = 0; h = 0;
+      } else {
+        const den = dx1*dy2 - dx2*dy1;
+        g = den !== 0 ? (dx3*dy2 - dx2*dy3)/den : 0;
+        h = den !== 0 ? (dx1*dy3 - dx3*dy1)/den : 0;
+        a = x1-x0+g*x1; b = x3-x0+h*x3; c = x0;
+        d = y1-y0+g*y1; e = y3-y0+h*y3; f = y0;
+      }
+      // Se compone con una escala 1/W, 1/H para que la matriz reciba coordenadas
+      // locales del elemento (0..W, 0..H) en vez de (0..1, 0..1).
+      return {
+        a: a/W, b: b/H, c: c,
+        d: d/W, e: e/H, f: f,
+        g: g/W, h: h/H, i: 1
+      };
+    }
+
+    function applyQuad(quadEl){
+      const frame = quadEl.closest('.mockup-frame');
+      if (!frame) return;
+      const rect = frame.getBoundingClientRect();
+      if (rect.width < 1 || rect.height < 1) return;
+
+      const pts = quadEl.dataset.quad.trim().split(/\s+/).map(pair => pair.split(',').map(Number));
+      const quadPx = pts.map(([xp, yp]) => [rect.width * xp / 100, rect.height * yp / 100]);
+
+      const W = Number(quadEl.dataset.videoW) || 1536;
+      const H = Number(quadEl.dataset.videoH) || 336;
+      const m = solveQuadMatrix(W, H, quadPx);
+
+      quadEl.style.width = W + 'px';
+      quadEl.style.height = H + 'px';
+      quadEl.style.transform =
+        `matrix3d(${m.a},${m.d},0,${m.g}, ${m.b},${m.e},0,${m.h}, 0,0,1,0, ${m.c},${m.f},0,${m.i})`;
+      quadEl.classList.add('is-ready');
+    }
+
+    function refreshAllQuads(){
+      document.querySelectorAll('.mockup-screen-quad[data-quad]').forEach(applyQuad);
+    }
+
+    refreshAllQuads();
+    window.addEventListener('load', refreshAllQuads);
+    window.addEventListener('resize', refreshAllQuads);
+    // El carrusel puede cambiar de slide antes de que el layout esté estable (fuentes, etc.).
+    setTimeout(refreshAllQuads, 150);
+    setTimeout(refreshAllQuads, 600);
   })();
 </script>
 
