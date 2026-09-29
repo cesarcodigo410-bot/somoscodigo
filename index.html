@@ -969,7 +969,7 @@
         <img src="assets/logos/ravec.png" alt="Grupo RAVEC" class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity">
       </div>
       <div class="flex items-center gap-16 px-8" aria-hidden="true">
-        <img src="assets/logos/mombii.png" alt="Mombii.com" class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity">
+       <img src="assets/logos/mombii.png" alt="Mombii.com" class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity">
         <img src="assets/logos/awg.png" alt="AWG" class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity">
         <img src="assets/logos/watergen.png" alt="Watergen" class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity">
         <img src="assets/logos/cleaning-details.png" alt="Cleaning Details" class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity">
@@ -987,6 +987,7 @@
         <img src="assets/logos/i4.png" alt="I4 Mobiliario" class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity">
         <img src="assets/logos/micoope.png" alt="MiCoope" class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity">
         <img src="assets/logos/ravec.png" alt="Grupo RAVEC" class="h-8 md:h-10 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity">
+      </div>
       </div>
     </div>
   </div>
@@ -1416,7 +1417,8 @@
     const nextBtn = document.getElementById('clientsNext');
     if (!wrap || !track || !prevBtn || !nextBtn) return;
 
-    const AUTO_SPEED = 36; // px por segundo
+    const LOOP_SECONDS = 32; // igual que la referencia: un set completo de logos cada 32s (lineal, infinito)
+    let autoSpeed = 0;       // px por segundo (se calcula al medir: ancho de un set / LOOP_SECONDS)
     let pos = 0;            // posición actual en px (negativo = movido a la izquierda)
     let setWidth = 0;       // ancho de un solo set de logos (el track tiene 2 sets duplicados)
     let logoStep = 160;     // distancia aproximada de un logo (se recalcula)
@@ -1431,6 +1433,7 @@
       setWidth = firstSet.getBoundingClientRect().width;
       const count = firstSet.children.length || 1;
       logoStep = setWidth / count;
+      autoSpeed = setWidth / LOOP_SECONDS;
     }
     window.addEventListener('load', measure);
     window.addEventListener('resize', measure);
@@ -1440,10 +1443,10 @@
 
     function tick(time){
       if (lastTime === null) lastTime = time;
-      const dt = (time - lastTime) / 1000;
+      const dt = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
-      if (!hovering && !manualPause && !prefersReducedMotion && setWidth > 0) {
-        pos -= AUTO_SPEED * dt;
+      if (!hovering && !manualPause && setWidth > 0) {
+        pos -= autoSpeed * dt;
         if (pos <= -setWidth) pos += setWidth;
         applyTransform();
       }
