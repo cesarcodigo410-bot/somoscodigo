@@ -768,64 +768,127 @@
   </div>
 </section>
 
-<!-- ============ ANTES / DESPUÉS — carrusel de 3 proyectos ============ -->
+<!-- ============ <!-- ============ ANTES / DESPUÉS — carrusel de 3 proyectos ============ -->
 <section id="transformacion" class="snap-section relative py-32 px-6 lg:px-10 grid-bg">
   <div class="max-w-6xl mx-auto">
+    
+    <!-- Encabezado de Sección -->
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
       <div class="text-center md:text-left mx-auto md:mx-0">
         <p data-aos="fade-up" class="eyebrow mb-6 justify-center md:justify-start flex">TRANSFORMACIÓN REAL</p>
-        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl">Antes y después <span class="brand-go">del cambio estratégico.</span></h2>
-        <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] mt-5 max-w-xl">Arrastra la línea para ver la evolución visual y comercial. Así transformamos marcas genéricas en activos visuales de alto valor percibido.</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl">
+          Antes y después <span class="brand-go">del cambio estratégico.</span>
+        </h2>
+        <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] mt-5 max-w-xl">
+          Arrastra la línea para ver la evolución visual y comercial. Así transformamos marcas genéricas en activos visuales de alto valor percibido.
+        </p>
       </div>
+      
+      <!-- Controles Desktop -->
       <div data-aos="fade-up" data-aos-delay="200" class="hidden md:flex items-center gap-3 flex-shrink-0">
-        <button id="baPrev" aria-label="Proyecto anterior" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <button id="baNext" aria-label="Siguiente proyecto" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="baPrev" aria-label="Proyecto anterior" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button id="baNext" aria-label="Siguiente proyecto" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
 
+    <!-- Carrusel de Comparación -->
     <div data-aos="fade-up" data-aos-delay="240" class="relative">
       <div class="overflow-hidden rounded-2xl border border-white/10">
         <div id="baTrack" class="flex transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)]">
+          
+          <!-- SLIDE 1: Verde Café -->
           <div class="ba-slide w-full flex-shrink-0">
-            <div class="ba-wrap aspect-[16/10] md:aspect-[16/8]">
+            <div class="ba-wrap relative overflow-hidden aspect-[16/10] md:aspect-[16/8] group">
+              <!-- ANTES (Izquierda - Fondo / Blanco y Negro) -->
               <img src="https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1600&auto=format&fit=crop" alt="Verde Café antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75">
-              <div class="ba-after"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop" alt="Verde Café después del rediseño" class="ba-after-img"></div>
-              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full">SIN ESTRATEGIA</span>
-              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full">NUEVO POSICIONAMIENTO</span>
-              <span class="absolute bottom-5 left-5 font-display font-semibold text-lg bg-black/40 backdrop-blur px-4 py-2 rounded-full">Verde Café</span>
-              <div class="ba-handle"><div class="knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+              <span class="absolute top-5 left-5 z-10 font-mono text-xs tracking-widest bg-black/50 backdrop-blur px-3 py-1.5 rounded-full text-white/80">SIN ESTRATEGIA</span>
+              
+              <!-- DESPUÉS (Derecha - Capa Sobrepuesta / A todo Color con ligera escala) -->
+              <div class="ba-after absolute inset-0 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop" alt="Verde Café después del rediseño" class="ba-after-img absolute inset-0 w-full h-full object-cover transform scale-105 transition-transform duration-500 ease-out group-hover:scale-100">
+                <span class="absolute top-5 right-5 z-10 font-mono text-xs tracking-widest bg-[var(--blue-2)]/80 backdrop-blur px-3 py-1.5 rounded-full text-white">NUEVO POSICIONAMIENTO</span>
+              </div>
+
+              <span class="absolute bottom-5 left-5 z-20 font-display font-semibold text-lg bg-black/60 backdrop-blur px-4 py-2 rounded-full text-white">Verde Café</span>
+              
+              <!-- Separador / Knob -->
+              <div class="ba-handle z-30">
+                <div class="knob shadow-lg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
             </div>
           </div>
+
+          <!-- SLIDE 2: Nortia Bank -->
           <div class="ba-slide w-full flex-shrink-0">
-            <div class="ba-wrap aspect-[16/10] md:aspect-[16/8]">
+            <div class="ba-wrap relative overflow-hidden aspect-[16/10] md:aspect-[16/8] group">
+              <!-- ANTES (Blanco y Negro) -->
               <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1600&auto=format&fit=crop" alt="Nortia Bank antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75">
-              <div class="ba-after"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1600&auto=format&fit=crop" alt="Nortia Bank después del rediseño" class="ba-after-img"></div>
-              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full">ANTES</span>
-              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full">DESPUÉS</span>
-              <span class="absolute bottom-5 left-5 font-display font-semibold text-lg bg-black/40 backdrop-blur px-4 py-2 rounded-full">Nortia Bank</span>
-              <div class="ba-handle"><div class="knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+              <span class="absolute top-5 left-5 z-10 font-mono text-xs tracking-widest bg-black/50 backdrop-blur px-3 py-1.5 rounded-full text-white/80">SIN ESTRATEGIA</span>
+              
+              <!-- DESPUÉS (A Color + Zoom Effect) -->
+              <div class="ba-after absolute inset-0 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1600&auto=format&fit=crop" alt="Nortia Bank después del rediseño" class="ba-after-img absolute inset-0 w-full h-full object-cover transform scale-105 transition-transform duration-500 ease-out group-hover:scale-100">
+                <span class="absolute top-5 right-5 z-10 font-mono text-xs tracking-widest bg-[var(--blue-2)]/80 backdrop-blur px-3 py-1.5 rounded-full text-white">NUEVO POSICIONAMIENTO</span>
+              </div>
+
+              <span class="absolute bottom-5 left-5 z-20 font-display font-semibold text-lg bg-black/60 backdrop-blur px-4 py-2 rounded-full text-white">Nortia Bank</span>
+              
+              <div class="ba-handle z-30">
+                <div class="knob shadow-lg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
             </div>
           </div>
+
+          <!-- SLIDE 3: Raíz Orgánica -->
           <div class="ba-slide w-full flex-shrink-0">
-            <div class="ba-wrap aspect-[16/10] md:aspect-[16/8]">
+            <div class="ba-wrap relative overflow-hidden aspect-[16/10] md:aspect-[16/8] group">
+              <!-- ANTES (Blanco y Negro) -->
               <img src="https://images.unsplash.com/photo-1506617420156-8e4536971650?q=80&w=1600&auto=format&fit=crop" alt="Raíz Orgánica antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75">
-              <div class="ba-after"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop" alt="Raíz Orgánica después del rediseño" class="ba-after-img"></div>
-              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full">ANTES</span>
-              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full">DESPUÉS</span>
-              <span class="absolute bottom-5 left-5 font-display font-semibold text-lg bg-black/40 backdrop-blur px-4 py-2 rounded-full">Raíz Orgánica</span>
-              <div class="ba-handle"><div class="knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+              <span class="absolute top-5 left-5 z-10 font-mono text-xs tracking-widest bg-black/50 backdrop-blur px-3 py-1.5 rounded-full text-white/80">SIN ESTRATEGIA</span>
+              
+              <!-- DESPUÉS (A Color + Zoom Effect) -->
+              <div class="ba-after absolute inset-0 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop" alt="Raíz Orgánica después del rediseño" class="ba-after-img absolute inset-0 w-full h-full object-cover transform scale-105 transition-transform duration-500 ease-out group-hover:scale-100">
+                <span class="absolute top-5 right-5 z-10 font-mono text-xs tracking-widest bg-[var(--blue-2)]/80 backdrop-blur px-3 py-1.5 rounded-full text-white">NUEVO POSICIONAMIENTO</span>
+              </div>
+
+              <span class="absolute bottom-5 left-5 z-20 font-display font-semibold text-lg bg-black/60 backdrop-blur px-4 py-2 rounded-full text-white">Raíz Orgánica</span>
+              
+              <div class="ba-handle z-30">
+                <div class="knob shadow-lg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
 
+      <!-- Controles Mobile -->
       <div class="flex md:hidden items-center justify-center gap-3 mt-6">
-        <button id="baPrevMobile" aria-label="Proyecto anterior" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <button id="baNextMobile" aria-label="Siguiente proyecto" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="baPrevMobile" aria-label="Proyecto anterior" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button id="baNextMobile" aria-label="Siguiente proyecto" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
+
+      <!-- Indicadores de Navegación -->
       <div id="baDots" class="flex items-center justify-center gap-2.5 mt-6"></div>
     </div>
+
   </div>
+</section>
 </section>
 
 <!-- ============ NOVEDAD: Sección Contenido Digital ============ -->
