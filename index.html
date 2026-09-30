@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<title>CÓDIGO - Creatividad Digital | Diseño, Branding y Marketing</title>
-<meta name="description" content="CÓDIGO es un estudio de creatividad digital en Guatemala. Diseñamos, comunicamos y conectamos marcas con resultados reales a través de branding, marketing y contenido digital.">
+<title data-i18n="meta.title">CÓDIGO - Creatividad Digital | Diseño, Branding y Marketing</title>
+<meta name="description" data-i18n-attr="content:meta.desc" content="CÓDIGO es un estudio de creatividad digital en Guatemala. Diseñamos, comunicamos y conectamos marcas con resultados reales a través de branding, marketing y contenido digital.">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
@@ -457,40 +457,58 @@
   }
   .mockup-screen-quad.is-ready{ opacity: 1; }
   .mockup-screen-quad video{ width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ---- i18n: selector de idioma (glass) + cross-fade suave ---- */
+  .lang-btn{ line-height: 1; cursor: pointer; }
+  .lang-btn.is-active{ background: rgba(35,181,232,.18); color: #fff; font-weight: 700; box-shadow: inset 0 0 0 1px rgba(35,181,232,.35); }
+  body > section, body > footer{ transition: opacity .18s ease; }
+  html.i18n-fade body > section, html.i18n-fade body > footer{ opacity: 0; }
+  html.i18n-pending body{ visibility: hidden; }
 </style>
+<script>
+  /* Evita el parpadeo en español cuando el idioma detectado es inglés */
+  (function(){ try {
+    var s = localStorage.getItem('preferred_lang'), n = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+    if (s === 'en' || (s !== 'es' && n.indexOf('en') === 0)) { document.documentElement.classList.add('i18n-pending'); setTimeout(function(){ document.documentElement.classList.remove('i18n-pending'); }, 3000); }
+  } catch (e) {} })();
+</script>
 </head>
 <body class="noise">
 <div class="cursor-dot" aria-hidden="true"></div>
-<div class="cursor-ring" aria-hidden="true"><span class="cursor-text">VER</span></div>
+<div class="cursor-ring" aria-hidden="true"><span class="cursor-text" data-i18n="ui.1">VER</span></div>
 
 <!-- ============ NAV ============ -->
 <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div id="navInner" class="flex items-center justify-between py-5 transition-all duration-500">
-      <a href="#inicio" class="flex items-center"><img src="logo-header.svg" alt="CÓDIGO - Creatividad Digital" class="h-7 md:h-8 w-auto"></a>
+      <a href="#inicio" class="flex items-center"><img src="logo-header.svg" alt="CÓDIGO - Creatividad Digital" class="h-7 md:h-8 w-auto" data-i18n-attr="alt:nav.1"></a>
       <div class="hidden lg:flex items-center gap-10 font-mono text-[13px] tracking-wide">
-        <a href="#inicio" class="hover:text-[var(--neon)] transition-colors">INICIO</a>
-        <a href="#nosotros" class="hover:text-[var(--neon)] transition-colors">NOSOTROS</a>
-        <a href="#servicios" class="hover:text-[var(--neon)] transition-colors">SERVICIOS</a>
-        <a href="#proyectos" class="hover:text-[var(--neon)] transition-colors">PROYECTOS</a>
-        <a href="#clientes" class="hover:text-[var(--neon)] transition-colors">CLIENTES</a>
-        <a href="#contacto" class="hover:text-[var(--neon)] transition-colors">CONTACTO</a>
+        <a href="#inicio" class="hover:text-[var(--neon)] transition-colors" data-i18n="nav.2">INICIO</a>
+        <a href="#nosotros" class="hover:text-[var(--neon)] transition-colors" data-i18n="nav.3">NOSOTROS</a>
+        <a href="#servicios" class="hover:text-[var(--neon)] transition-colors" data-i18n="nav.4">SERVICIOS</a>
+        <a href="#proyectos" class="hover:text-[var(--neon)] transition-colors" data-i18n="nav.5">PROYECTOS</a>
+        <a href="#clientes" class="hover:text-[var(--neon)] transition-colors" data-i18n="nav.6">CLIENTES</a>
+        <a href="#contacto" class="hover:text-[var(--neon)] transition-colors" data-i18n="nav.7">CONTACTO</a>
       </div>
-      <a href="#contacto" class="btn-primary magnetic hidden lg:inline-block text-sm font-medium px-6 py-2.5 rounded-full">Hablemos</a>
+      <div class="flex items-center gap-3 lg:gap-4">
+        <div class="lang-switch inline-flex items-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md p-0.5 font-mono text-[11px] tracking-[0.14em] shadow-[0_0_24px_rgba(8,26,56,0.35)]" role="group" aria-label="Idioma / Language"><button type="button" class="lang-btn rounded-full px-3 py-1.5 text-white/60 hover:text-white transition-all duration-300 is-active" data-lang="es" lang="es" aria-pressed="true" title="Español">ES</button><button type="button" class="lang-btn rounded-full px-3 py-1.5 text-white/60 hover:text-white transition-all duration-300" data-lang="en" lang="en" aria-pressed="false" title="English">EN</button></div>
+        <a href="#contacto" class="btn-primary magnetic hidden lg:inline-block text-sm font-medium px-6 py-2.5 rounded-full" data-i18n="nav.8">Hablemos</a>
       <button id="menuBtn" class="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-[6px]">
         <span class="menu-line menu-line-1 block w-6 h-[1.5px] bg-white"></span>
         <span class="menu-line menu-line-2 block w-6 h-[1.5px] bg-white"></span>
         <span class="menu-line menu-line-3 block w-6 h-[1.5px] bg-white"></span>
       </button>
+      </div>
     </div>
   </div>
   <div id="mobileMenu" class="lg:hidden fixed inset-0 top-0 h-screen bg-[var(--navy)] translate-x-full transition-transform duration-500 ease-[cubic-bezier(.6,0,.2,1)] flex flex-col items-center justify-center gap-8 font-display text-3xl">
-    <a href="#inicio" class="mobile-link">Inicio</a>
-    <a href="#nosotros" class="mobile-link">Nosotros</a>
-    <a href="#servicios" class="mobile-link">Servicios</a>
-    <a href="#proyectos" class="mobile-link">Proyectos</a>
-    <a href="#clientes" class="mobile-link">Clientes</a>
-    <a href="#contacto" class="mobile-link">Contacto</a>
+    <a href="#inicio" class="mobile-link" data-i18n="menu.1">Inicio</a>
+    <a href="#nosotros" class="mobile-link" data-i18n="menu.2">Nosotros</a>
+    <a href="#servicios" class="mobile-link" data-i18n="menu.3">Servicios</a>
+    <a href="#proyectos" class="mobile-link" data-i18n="menu.4">Proyectos</a>
+    <a href="#clientes" class="mobile-link" data-i18n="menu.5">Clientes</a>
+    <a href="#contacto" class="mobile-link" data-i18n="menu.6">Contacto</a>
+    <div class="lang-switch inline-flex items-center rounded-full border border-white/10 bg-white/5 backdrop-blur-md p-0.5 font-mono text-sm tracking-[0.14em] shadow-[0_0_24px_rgba(8,26,56,0.35)]" role="group" aria-label="Idioma / Language"><button type="button" class="lang-btn rounded-full px-5 py-2.5 text-white/60 hover:text-white transition-all duration-300 is-active" data-lang="es" lang="es" aria-pressed="true" title="Español">ES</button><button type="button" class="lang-btn rounded-full px-5 py-2.5 text-white/60 hover:text-white transition-all duration-300" data-lang="en" lang="en" aria-pressed="false" title="English">EN</button></div>
   </div>
 </nav>
 
@@ -517,15 +535,15 @@
       title="Video de fondo — referencia"
       frameborder="0"
       allow="autoplay; encrypted-media"
-      allowfullscreen>
+      allowfullscreen data-i18n-attr="title:hero.1">
     </iframe>
     <div class="hero-video-overlay"></div>
   </div>
 
   <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 w-full flex justify-center text-center">
     <h1 data-aos="fade-up" class="headline-wrap text-[10vw] sm:text-6xl md:text-7xl lg:text-[5.2rem]">
-      <span class="headline-outline">IDEAS QUE CONECTAN.<br>DISEÑO QUE TRANSFORMA.</span>
-      <span class="headline-fill" aria-hidden="true">IDEAS QUE CONECTAN, DISEÑO QUE TRANSFORMA.<br>ESTRATEGIA QUE VENDE</span>
+      <span class="headline-outline" data-i18n="hero.2">IDEAS QUE CONECTAN.<br>DISEÑO QUE TRANSFORMA.</span>
+      <span class="headline-fill" aria-hidden="true" data-i18n="hero.3">IDEAS QUE CONECTAN, DISEÑO QUE TRANSFORMA.<br>ESTRATEGIA QUE VENDE</span>
     </h1>
   </div>
 
@@ -541,14 +559,14 @@
   <div class="max-w-7xl mx-auto w-full">
     <div class="grid lg:grid-cols-12 gap-14">
       <div class="lg:col-span-5">
-        <p data-aos="fade-up" class="eyebrow mb-6" style="color:var(--blue-2);">QUIÉNES SOMOS</p>
-        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight mb-8" style="color:var(--navy);">
+        <p data-aos="fade-up" class="eyebrow mb-6" style="color:var(--blue-2);" data-i18n="about.1">QUIÉNES SOMOS</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight mb-8" style="color:var(--navy);" data-i18n="about.2">
           Diseñamos con lógica.<br>Creamos con <span class="brand-go">intención.</span>
         </h2>
         <div data-aos="fade-up" data-aos-delay="160" class="space-y-5 leading-relaxed" style="color:#4A5568;">
-          <p>Unimos visión conceptual, diseño visual de alto impacto y soluciones digitales integrales para hacer crecer tu negocio. Creatividad con propósito comercial.</p>
-          <p>CÓDIGO nació de una convicción simple: el buen diseño no decora, resuelve. Combinamos pensamiento estratégico con ejecución precisa para que cada marca no solo se vea distinta, sino que venda y funcione mejor.</p>
-          <p>Trabajamos con marcas que quieren dejar de competir por precio y empezar a destacar por valor y percepción.</p>
+          <p data-i18n="about.3">Unimos visión conceptual, diseño visual de alto impacto y soluciones digitales integrales para hacer crecer tu negocio. Creatividad con propósito comercial.</p>
+          <p data-i18n="about.4">CÓDIGO nació de una convicción simple: el buen diseño no decora, resuelve. Combinamos pensamiento estratégico con ejecución precisa para que cada marca no solo se vea distinta, sino que venda y funcione mejor.</p>
+          <p data-i18n="about.5">Trabajamos con marcas que quieren dejar de competir por precio y empezar a destacar por valor y percepción.</p>
         </div>
       </div>
 
@@ -556,29 +574,29 @@
         <div class="grid grid-cols-2 gap-5 lg:gap-8">
           <div data-aos="fade-up" data-aos-delay="80" class="border-t pt-6" style="border-color:rgba(8,26,56,0.12);">
             <p class="font-display font-bold text-5xl md:text-6xl brand-go"><span class="text-2xl align-top">+</span>08</p>
-            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;">AÑOS DISEÑANDO MARCAS</p>
+            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;" data-i18n="about.6">AÑOS DISEÑANDO MARCAS</p>
           </div>
           <div data-aos="fade-up" data-aos-delay="160" class="border-t pt-6" style="border-color:rgba(8,26,56,0.12);">
             <p class="font-display font-bold text-5xl md:text-6xl brand-go"><span class="text-2xl align-top">+</span>120</p>
-            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;">PROYECTOS ENTREGADOS</p>
+            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;" data-i18n="about.7">PROYECTOS ENTREGADOS</p>
           </div>
           <div data-aos="fade-up" data-aos-delay="240" class="border-t pt-6" style="border-color:rgba(8,26,56,0.12);">
             <p class="font-display font-bold text-5xl md:text-6xl brand-go">96%</p>
-            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;">CLIENTES QUE RENUEVAN</p>
+            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;" data-i18n="about.8">CLIENTES QUE RENUEVAN</p>
           </div>
           <div data-aos="fade-up" data-aos-delay="320" class="border-t pt-6" style="border-color:rgba(8,26,56,0.12);">
             <p class="font-display font-bold text-5xl md:text-6xl brand-go">6</p>
-            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;">SOLUCIONES INTEGRALES</p>
+            <p class="font-mono text-xs mt-2 tracking-wide" style="color:#7A8699;" data-i18n="about.9">SOLUCIONES INTEGRALES</p>
           </div>
         </div>
 
 
         <div data-aos="fade-up" data-aos-delay="400" class="mt-10 p-6 md:p-8 rounded-2xl" style="background:var(--navy); color:#fff;">
-          <p class="font-mono text-xs tracking-widest mb-3" style="color:var(--neon);">// FILOSOFÍA</p>
-          <p class="text-lg md:text-xl font-display leading-snug">
+          <p class="font-mono text-xs tracking-widest mb-3" style="color:var(--neon);" data-i18n="about.10">// FILOSOFÍA</p>
+          <p class="text-lg md:text-xl font-display leading-snug" data-i18n="about.11">
             "Cada negocio enfrenta un mercado distinto y cuenta con un presupuesto diferente para alcanzar a sus clientes. Por eso no vendemos diseño genérico: construimos soluciones visuales personalizadas para que no pierdas oportunidades de venta, conectes de forma directa con tu público objetivo y destaques de verdad."
           </p>
-          <p class="font-mono text-xs mt-4" style="color:#8592AC;">César Alfaro / Director Creativo & Especialista en Marcas</p>
+          <p class="font-mono text-xs mt-4" style="color:#8592AC;" data-i18n="about.12">César Alfaro / Director Creativo & Especialista en Marcas</p>
         </div>
       </div>
     </div>
@@ -591,12 +609,12 @@
   <div class="max-w-7xl mx-auto relative z-10">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
       <div>
-        <p data-aos="fade-up" class="eyebrow mb-6">LO QUE HACEMOS</p>
-        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight">
+        <p data-aos="fade-up" class="eyebrow mb-6" data-i18n="services.1">LO QUE HACEMOS</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight" data-i18n="services.2">
           Seis soluciones.<br>Un solo <span class="brand-go">ecosistema.</span>
         </h2>
       </div>
-      <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] max-w-sm leading-relaxed">
+      <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] max-w-sm leading-relaxed" data-i18n="services.3">
         Cada solución se diseña según el presupuesto y objetivo de tu negocio. Diseñamos la cara visible y ejecutamos todo el sistema de forma integral.
       </p>
     </div>
@@ -610,8 +628,8 @@
             <path d="M13.5 6.5l3.9 3.9" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
         </div>
-        <h3 class="font-display font-semibold text-2xl mb-3">Branding & Identidad Visual</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Construcción estratégica de marca desde cero: naming, logotipo, manual de marca y empaque comercial diseñados para destacar y aumentar el valor percibido.</p>
+        <h3 class="font-display font-semibold text-2xl mb-3" data-i18n="services.4">Branding & Identidad Visual</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="services.5">Construcción estratégica de marca desde cero: naming, logotipo, manual de marca y empaque comercial diseñados para destacar y aumentar el valor percibido.</p>
       </div>
 
       <div data-aos="fade-up" data-aos-delay="60" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
@@ -622,8 +640,8 @@
             <path d="M14.5 6H20v5.5" stroke="#23B5E8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h3 class="font-display font-semibold text-2xl mb-3">Performance & Pauta Digital</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Estrategias de captación y ventas basadas en datos: pauta en redes, funnels de conversión y campañas enfocadas en retorno de inversión (ROI).</p>
+        <h3 class="font-display font-semibold text-2xl mb-3" data-i18n="services.6">Performance & Pauta Digital</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="services.7">Estrategias de captación y ventas basadas en datos: pauta en redes, funnels de conversión y campañas enfocadas en retorno de inversión (ROI).</p>
       </div>
 
       <div data-aos="fade-up" data-aos-delay="120" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
@@ -634,8 +652,8 @@
             <path d="M7 9.5h9M7 12.5h6" stroke="#23B5E8" stroke-width="1.4" stroke-linecap="round"/>
           </svg>
         </div>
-        <h3 class="font-display font-semibold text-2xl mb-3">Estrategia & Copywriting</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Definición del tono, mensajes clave y redacción comercial persuasiva para que tu negocio conecte con el grupo objetivo correcto y cierre más ventas.</p>
+        <h3 class="font-display font-semibold text-2xl mb-3" data-i18n="services.8">Estrategia & Copywriting</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="services.9">Definición del tono, mensajes clave y redacción comercial persuasiva para que tu negocio conecte con el grupo objetivo correcto y cierre más ventas.</p>
       </div>
 
       <div data-aos="fade-up" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
@@ -647,8 +665,8 @@
             <path d="M9 9.5l3 2.5-3 2.5z" stroke="#23B5E8" stroke-width="1.4" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h3 class="font-display font-semibold text-2xl mb-3">Contenido Digital & Motion</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Producción visual de alto impacto, animación y contenido estratégico para mantener a tu marca relevante, atractiva y activa cada semana.</p>
+        <h3 class="font-display font-semibold text-2xl mb-3" data-i18n="services.10">Contenido Digital & Motion</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="services.11">Producción visual de alto impacto, animación y contenido estratégico para mantener a tu marca relevante, atractiva y activa cada semana.</p>
       </div>
 
       <div data-aos="fade-up" data-aos-delay="60" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
@@ -658,8 +676,8 @@
             <path d="M12 3l2.6 5.8L21 9.6l-4.5 4.2 1.2 6.2L12 16.9l-5.7 3.1 1.2-6.2L3 9.6l6.4-.8L12 3z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h3 class="font-display font-semibold text-2xl mb-3">Desarrollo Web & Landing Pages</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Sitios web responsivos y páginas de aterrizaje optimizadas para la conversión, enfocadas en transformar visit en clientes potenciales.</p>
+        <h3 class="font-display font-semibold text-2xl mb-3" data-i18n="services.12">Desarrollo Web & Landing Pages</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="services.13">Sitios web responsivos y páginas de aterrizaje optimizadas para la conversión, enfocadas en transformar visit en clientes potenciales.</p>
       </div>
 
       <div data-aos="fade-up" data-aos-delay="120" class="service-card-v2 group relative rounded-2xl p-8 border border-white/10 overflow-hidden">
@@ -670,8 +688,8 @@
             <path d="M12 3a6.5 6.5 0 00-3.6 11.9c.5.4.8.9.8 1.5v.1h5.6v-.1c0-.6.3-1.1.8-1.5A6.5 6.5 0 0012 3z" stroke="#23B5E8" stroke-width="1.6" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h3 class="font-display font-semibold text-2xl mb-3">Soluciones Creativas 360°</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Proyectos a la medida para retos específicos: campañas de lanzamiento, activaciones, piezas comerciales complejas y productos de marca.</p>
+        <h3 class="font-display font-semibold text-2xl mb-3" data-i18n="services.14">Soluciones Creativas 360°</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="services.15">Proyectos a la medida para retos específicos: campañas de lanzamiento, activaciones, piezas comerciales complejas y productos de marca.</p>
       </div>
     </div>
   </div>
@@ -682,8 +700,8 @@
   <div class="max-w-7xl mx-auto">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
       <div>
-        <p data-aos="fade-up" class="eyebrow mb-6">PORTAFOLIO</p>
-        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight">
+        <p data-aos="fade-up" class="eyebrow mb-6" data-i18n="work.1">PORTAFOLIO</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight" data-i18n="work.2">
           Proyectos que <span class="brand-go">hablan</span><br>por sus resultados.
         </h2>
       </div>
@@ -695,7 +713,7 @@
            data-obj="Reposicionar una banca tradicional como una fintech confiable para nuevas generaciones."
            data-desc="Rediseñamos por completo la identidad de Nortia Bank: del logotipo al sistema de interfaz de su app. El resultado fue un incremento del 34% en descargas de la aplicación durante el primer trimestre tras el relanzamiento."
            data-images='[&quot;https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1200&auto=format&fit=crop&quot;]'>
-        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Nortia Bank" class="w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Nortia Bank" class="w-full h-full object-cover" data-i18n-attr="alt:work.3">
         <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
           <span class="font-mono text-xs text-[var(--neon)] mb-2">BRANDING · DIGITAL</span>
           <div class="flex items-center justify-between">
@@ -710,9 +728,9 @@
            data-obj="Crear una marca de café de especialidad que compitiera visualmente con cadenas internacionales."
            data-desc="Desarrollamos identidad, empaque y experiencia de punto de venta para Verde Café. La nueva imagen permitió abrir tres sucursales adicionales en un año, apoyadas en un sistema visual replicable."
            data-images='[&quot;https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1200&auto=format&fit=crop&quot;]'>
-        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Verde Café" class="w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Verde Café" class="w-full h-full object-cover" data-i18n-attr="alt:work.4">
         <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
-          <span class="font-mono text-xs text-[var(--neon)] mb-2">IDENTIDAD DE MARCA</span>
+          <span class="font-mono text-xs text-[var(--neon)] mb-2" data-i18n="work.5">IDENTIDAD DE MARCA</span>
           <div class="flex items-center justify-between">
             <h3 class="font-display font-bold text-2xl">Verde Café</h3>
             <span class="plus rounded-full flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
@@ -725,9 +743,9 @@
            data-obj="Aumentar la generación de leads calificados para un estudio de arquitectura de lujo."
            data-desc="Diseñamos y ejecutamos una estrategia de contenido y pauta digital enfocada en portafolio visual. Los leads calificados aumentaron 2.4x en seis meses, con un costo por adquisición 40% menor."
            data-images='[&quot;https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop&quot;]'>
-        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Lúmina Studios" class="w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Lúmina Studios" class="w-full h-full object-cover" data-i18n-attr="alt:work.6">
         <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
-          <span class="font-mono text-xs text-[var(--neon)] mb-2">MARKETING DIGITAL</span>
+          <span class="font-mono text-xs text-[var(--neon)] mb-2" data-i18n="work.7">MARKETING DIGITAL</span>
           <div class="flex items-center justify-between">
             <h3 class="font-display font-bold text-2xl">Lúmina Studios</h3>
             <span class="plus rounded-full flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
@@ -740,9 +758,9 @@
            data-obj="Diferenciar una línea de alimentos orgánicos en un anaquel saturado de competencia."
            data-desc="El nuevo sistema de empaque de Raíz Orgánica usa ilustración botánica e iconografía clara de beneficios. Las ventas en punto de venta crecieron 27% en los primeros cuatro meses."
            data-images='[&quot;https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1506617420156-8e4536971650?q=80&w=1200&auto=format&fit=crop&quot;]'>
-        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Raíz Orgánica" class="w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Raíz Orgánica" class="w-full h-full object-cover" data-i18n-attr="alt:work.8">
         <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
-          <span class="font-mono text-xs text-[var(--neon)] mb-2">BRANDING · EMPAQUE</span>
+          <span class="font-mono text-xs text-[var(--neon)] mb-2" data-i18n="work.9">BRANDING · EMPAQUE</span>
           <div class="flex items-center justify-between">
             <h3 class="font-display font-bold text-2xl">Raíz Orgánica</h3>
             <span class="plus rounded-full flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
@@ -755,9 +773,9 @@
            data-obj="Humanizar la comunicación de una empresa de software B2B para audiencias no técnicas."
            data-desc="Creamos una línea editorial de video y redes que tradujo funcionalidades técnicas en beneficios claros. El engagement en LinkedIn se multiplicó por 3.1 en el primer trimestre de campaña."
            data-images='[&quot;https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop&quot;,&quot;https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop&quot;]'>
-        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Órbita Tech" class="w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop" alt="Proyecto Órbita Tech" class="w-full h-full object-cover" data-i18n-attr="alt:work.10">
         <div class="overlay absolute inset-0 p-8 flex flex-col justify-end">
-          <span class="font-mono text-xs text-[var(--neon)] mb-2">CONTENIDO DIGITAL</span>
+          <span class="font-mono text-xs text-[var(--neon)] mb-2" data-i18n="work.11">CONTENIDO DIGITAL</span>
           <div class="flex items-center justify-between">
             <h3 class="font-display font-bold text-2xl">Órbita Tech</h3>
             <span class="plus rounded-full flex items-center justify-center flex-shrink-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
@@ -773,13 +791,13 @@
   <div class="max-w-6xl mx-auto">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
       <div class="text-center md:text-left mx-auto md:mx-0">
-        <p data-aos="fade-up" class="eyebrow mb-6 justify-center md:justify-start flex">TRANSFORMACIÓN REAL</p>
-        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl">Antes y después <span class="brand-go">del cambio estratégico.</span></h2>
-        <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] mt-5 max-w-xl">Arrastra la línea para ver la evolución visual y comercial. Así transformamos marcas genéricas en activos visuales de alto valor percibido.</p>
+        <p data-aos="fade-up" class="eyebrow mb-6 justify-center md:justify-start flex" data-i18n="ba.1">TRANSFORMACIÓN REAL</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl" data-i18n="ba.2">Antes y después <span class="brand-go">del cambio estratégico.</span></h2>
+        <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] mt-5 max-w-xl" data-i18n="ba.3">Arrastra la línea para ver la evolución visual y comercial. Así transformamos marcas genéricas en activos visuales de alto valor percibido.</p>
       </div>
       <div data-aos="fade-up" data-aos-delay="200" class="hidden md:flex items-center gap-3 flex-shrink-0">
-        <button id="baPrev" aria-label="Proyecto anterior" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <button id="baNext" aria-label="Siguiente proyecto" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="baPrev" aria-label="Proyecto anterior" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors" data-i18n-attr="aria-label:ba.4"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="baNext" aria-label="Siguiente proyecto" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors" data-i18n-attr="aria-label:ba.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
 
@@ -788,30 +806,30 @@
         <div id="baTrack" class="flex transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)]">
           <div class="ba-slide w-full flex-shrink-0">
             <div class="ba-wrap aspect-[16/10] md:aspect-[16/8]">
-              <img src="https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1600&auto=format&fit=crop" alt="Verde Café antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75">
-              <div class="ba-after"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop" alt="Verde Café después del rediseño" class="ba-after-img"></div>
-              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full">Después</span>
-              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full">Antes</span>
+              <img src="https://images.unsplash.com/photo-1461988091159-192b6df7054f?q=80&w=1600&auto=format&fit=crop" alt="Verde Café antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75" data-i18n-attr="alt:ba.6">
+              <div class="ba-after"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop" alt="Verde Café después del rediseño" class="ba-after-img" data-i18n-attr="alt:ba.7"></div>
+              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full" data-i18n="ba.8">Después</span>
+              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full" data-i18n="ba.9">Antes</span>
               <span class="absolute bottom-5 left-5 font-display font-semibold text-lg bg-black/40 backdrop-blur px-4 py-2 rounded-full">Verde Café</span>
               <div class="ba-handle"><div class="knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
             </div>
           </div>
           <div class="ba-slide w-full flex-shrink-0">
             <div class="ba-wrap aspect-[16/10] md:aspect-[16/8]">
-              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1600&auto=format&fit=crop" alt="Nortia Bank antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75">
-              <div class="ba-after"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1600&auto=format&fit=crop" alt="Nortia Bank después del rediseño" class="ba-after-img"></div>
-              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full">Después</span>
-              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full">Antes</span>
+              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1600&auto=format&fit=crop" alt="Nortia Bank antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75" data-i18n-attr="alt:ba.10">
+              <div class="ba-after"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1600&auto=format&fit=crop" alt="Nortia Bank después del rediseño" class="ba-after-img" data-i18n-attr="alt:ba.11"></div>
+              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full" data-i18n="ba.8">Después</span>
+              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full" data-i18n="ba.9">Antes</span>
               <span class="absolute bottom-5 left-5 font-display font-semibold text-lg bg-black/40 backdrop-blur px-4 py-2 rounded-full">Nortia Bank</span>
               <div class="ba-handle"><div class="knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
             </div>
           </div>
           <div class="ba-slide w-full flex-shrink-0">
             <div class="ba-wrap aspect-[16/10] md:aspect-[16/8]">
-              <img src="https://images.unsplash.com/photo-1506617420156-8e4536971650?q=80&w=1600&auto=format&fit=crop" alt="Raíz Orgánica antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75">
-              <div class="ba-after"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop" alt="Raíz Orgánica después del rediseño" class="ba-after-img"></div>
-              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full">Después</span>
-              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full">Antes</span>
+              <img src="https://images.unsplash.com/photo-1506617420156-8e4536971650?q=80&w=1600&auto=format&fit=crop" alt="Raíz Orgánica antes del rediseño" class="absolute inset-0 w-full h-full object-cover grayscale contrast-75" data-i18n-attr="alt:ba.12">
+              <div class="ba-after"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop" alt="Raíz Orgánica después del rediseño" class="ba-after-img" data-i18n-attr="alt:ba.13"></div>
+              <span class="absolute top-5 left-5 font-mono text-xs tracking-widest bg-black/40 backdrop-blur px-3 py-1.5 rounded-full" data-i18n="ba.8">Después</span>
+              <span class="absolute top-5 right-5 font-mono text-xs tracking-widest bg-[var(--blue-2)]/70 backdrop-blur px-3 py-1.5 rounded-full" data-i18n="ba.9">Antes</span>
               <span class="absolute bottom-5 left-5 font-display font-semibold text-lg bg-black/40 backdrop-blur px-4 py-2 rounded-full">Raíz Orgánica</span>
               <div class="ba-handle"><div class="knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="#081A38" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
             </div>
@@ -820,8 +838,8 @@
       </div>
 
       <div class="flex md:hidden items-center justify-center gap-3 mt-6">
-        <button id="baPrevMobile" aria-label="Proyecto anterior" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <button id="baNextMobile" aria-label="Siguiente proyecto" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="baPrevMobile" aria-label="Proyecto anterior" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors" data-i18n-attr="aria-label:ba.4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="baNextMobile" aria-label="Siguiente proyecto" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors" data-i18n-attr="aria-label:ba.5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
       <div id="baDots" class="flex items-center justify-center gap-2.5 mt-6"></div>
     </div>
@@ -835,12 +853,12 @@
   <div class="max-w-7xl mx-auto relative z-10">
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
       <div>
-        <p data-aos="fade-up" class="eyebrow mb-6">ANIMACIÓN DIGITAL</p>
-        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight">
+        <p data-aos="fade-up" class="eyebrow mb-6" data-i18n="motion.1">ANIMACIÓN DIGITAL</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight" data-i18n="motion.2">
           Piezas que <span class="brand-go">captan atención</span><br>donde vive la marca.
         </h2>
       </div>
-      <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] max-w-sm leading-relaxed">
+      <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] max-w-sm leading-relaxed" data-i18n="motion.3">
        Motion graphics diseñados para pantallas reales y entornos comerciales: mupis digitales, punto de venta, redes sociales y formatos especiales que convierten miradas en clientes.
       </p>
     </div>
@@ -855,7 +873,7 @@
               <div class="mockup-frame aspect-[9/16]"
                    style="--screen-top:8%; --screen-left:9%; --screen-width:82%; --screen-height:78%; --screen-radius:6px;">
                 <!-- Imagen del marco/mockup (fija): reemplazar por la fotografía real del mupi en el centro comercial -->
-                <img class="mockup-bg" src="https://images.unsplash.com/photo-1555529771-7888783a18d3?q=80&w=1000&auto=format&fit=crop" alt="Mockup de referencia: mupi digital vertical en centro comercial">
+                <img class="mockup-bg" src="https://images.unsplash.com/photo-1555529771-7888783a18d3?q=80&w=1000&auto=format&fit=crop" alt="Mockup de referencia: mupi digital vertical en centro comercial" data-i18n-attr="alt:motion.4">
                 <div class="mockup-screen">
                   <!-- 🔧 ACTUALIZAR AQUÍ: variable de fuente del video/animación (Mupi Digital, 1080×1920).
                        Solo reemplazar el src del <source>; no mover ni redimensionar este contenedor. -->
@@ -866,7 +884,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between mt-5">
-                <span class="motion-format-badge rounded-full px-3 py-1.5">MUPI DIGITAL · CENTRO COMERCIAL</span>
+                <span class="motion-format-badge rounded-full px-3 py-1.5" data-i18n="motion.5">MUPI DIGITAL · CENTRO COMERCIAL</span>
                 <span class="font-mono text-xs text-[var(--grey-dim)]">1080 × 1920 px</span>
               </div>
             </div>
@@ -878,7 +896,7 @@
               <div class="mockup-frame aspect-[16/9]"
                    style="--screen-top:12%; --screen-left:14%; --screen-width:72%; --screen-height:62%; --screen-radius:8px;">
                 <!-- Imagen del marco/mockup (fija): reemplazar por la fotografía real de la pantalla en el restaurante -->
-                <img class="mockup-bg" src="assets/pantalla-restaurante-fondo.png" alt="Mockup de referencia: pantalla horizontal en restaurante">
+                <img class="mockup-bg" src="assets/pantalla-restaurante-fondo.png" alt="Mockup de referencia: pantalla horizontal en restaurante" data-i18n-attr="alt:motion.6">
                 <div class="mockup-screen">
                   <!-- 🔧 ACTUALIZAR AQUÍ: variable de fuente del video/animación (Pantalla Restaurante, 1920×1080).
                        Solo reemplazar el src del <source>; no mover ni redimensionar este contenedor. -->
@@ -889,7 +907,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between mt-5">
-                <span class="motion-format-badge rounded-full px-3 py-1.5">PANTALLA · RESTAURANTE</span>
+                <span class="motion-format-badge rounded-full px-3 py-1.5" data-i18n="motion.7">PANTALLA · RESTAURANTE</span>
                 <span class="font-mono text-xs text-[var(--grey-dim)]">1920 × 1080 px</span>
               </div>
             </div>
@@ -900,7 +918,7 @@
             <div class="max-w-4xl mx-auto">
               <div class="mockup-frame aspect-[1600/1067]" id="pasarelaFrame">
                 <!-- Imagen del marco/mockup (fija): fotografía real de la valla pasarela sobre Av. Roosevelt -->
-                <img class="mockup-bg" src="assets/mockups/valla-pasarela-roosevelt.jpg" alt="Mockup de referencia: pantalla digital en la valla pasarela sobre avenida Roosevelt">
+                <img class="mockup-bg" src="assets/mockups/valla-pasarela-roosevelt.jpg" alt="Mockup de referencia: pantalla digital en la valla pasarela sobre avenida Roosevelt" data-i18n-attr="alt:motion.8">
                 <!-- Contenedor de pantalla ajustado a la PERSPECTIVA real de la foto (proyección en 4 esquinas,
                      definidas en % del marco vía data-quad="TL TR BR BL"). Si se reemplaza la fotografía,
                      solo hay que recalcular estos 4 puntos; no tocar el JS de abajo. -->
@@ -914,7 +932,7 @@
                 </div>
               </div>
               <div class="flex items-center justify-between mt-5">
-                <span class="motion-format-badge rounded-full px-3 py-1.5">VALLA PASARELA · AV. ROOSEVELT</span>
+                <span class="motion-format-badge rounded-full px-3 py-1.5" data-i18n="motion.9">VALLA PASARELA · AV. ROOSEVELT</span>
                 <span class="font-mono text-xs text-[var(--grey-dim)]">1536 × 336 px</span>
               </div>
             </div>
@@ -924,9 +942,9 @@
       </div>
 
       <div class="flex items-center justify-center gap-3 mt-10">
-        <button id="motionPrev" aria-label="Pieza anterior" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="motionPrev" aria-label="Pieza anterior" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors" data-i18n-attr="aria-label:motion.10"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div id="motionDots" class="flex items-center gap-2.5"></div>
-        <button id="motionNext" aria-label="Siguiente pieza" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button id="motionNext" aria-label="Siguiente pieza" class="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors" data-i18n-attr="aria-label:motion.11"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
   </div>
@@ -937,12 +955,12 @@
 <section id="clientes" class="snap-section relative py-24 overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
     <div>
-      <p data-aos="fade-up" class="eyebrow mb-6">CONFÍAN EN NOSOTROS</p>
-      <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl">Marcas que ya <span class="brand-go">conectan.</span></h2>
+      <p data-aos="fade-up" class="eyebrow mb-6" data-i18n="clients.1">CONFÍAN EN NOSOTROS</p>
+      <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl" data-i18n="clients.2">Marcas que ya <span class="brand-go">conectan.</span></h2>
     </div>
     <div data-aos="fade-up" data-aos-delay="160" class="flex items-center gap-3 flex-shrink-0">
-      <button id="clientsPrev" aria-label="Ver logo anterior" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <button id="clientsNext" aria-label="Ver logo siguiente" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button id="clientsPrev" aria-label="Ver logo anterior" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors" data-i18n-attr="aria-label:clients.3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button id="clientsNext" aria-label="Ver logo siguiente" class="w-12 h-12 rounded-full border border-white/15 flex items-center justify-center hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors" data-i18n-attr="aria-label:clients.4"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
   </div>
   <div id="clientsWrap" class="marquee-wrap relative">
@@ -998,29 +1016,29 @@
 <section id="proceso" class="snap-section relative py-32 px-6 lg:px-10">
   <div class="max-w-7xl mx-auto">
     <div class="mb-20">
-      <p data-aos="fade-up" class="eyebrow mb-6">CÓMO TRABAJAMOS</p>
-      <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl max-w-2xl">Un método.<span class="brand-go"> Resultados reales.</span></h2>
+      <p data-aos="fade-up" class="eyebrow mb-6" data-i18n="process.1">CÓMO TRABAJAMOS</p>
+      <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl max-w-2xl" data-i18n="process.2">Un método.<span class="brand-go"> Resultados reales.</span></h2>
     </div>
     <div class="grid md:grid-cols-4 gap-8 md:gap-6">
       <div data-aos="fade-up" data-aos-delay="0" class="border-t border-white/10 pt-8">
         <span class="process-num text-6xl md:text-7xl">01</span>
-        <h3 class="font-display font-semibold text-xl mt-6 mb-3">Escuchamos</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Analizamos tu modelo de negocio, tu grupo objetivo y tu presupuesto disponible antes de trazar la primera idea visual.</p>
+        <h3 class="font-display font-semibold text-xl mt-6 mb-3" data-i18n="process.3">Escuchamos</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="process.4">Analizamos tu modelo de negocio, tu grupo objetivo y tu presupuesto disponible antes de trazar la primera idea visual.</p>
       </div>
       <div data-aos="fade-up" data-aos-delay="100" class="border-t border-white/10 pt-8">
         <span class="process-num text-6xl md:text-7xl">02</span>
-        <h3 class="font-display font-semibold text-xl mt-6 mb-3">Estrategizamos</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Definimos la ruta visual y el mensaje comercial: qué debe comunicar la marca para conectar con la audiencia correcta y diferenciarse.</p>
+        <h3 class="font-display font-semibold text-xl mt-6 mb-3" data-i18n="process.5">Estrategizamos</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="process.6">Definimos la ruta visual y el mensaje comercial: qué debe comunicar la marca para conectar con la audiencia correcta y diferenciarse.</p>
       </div>
       <div data-aos="fade-up" data-aos-delay="200" class="border-t border-white/10 pt-8">
         <span class="process-num text-6xl md:text-7xl">03</span>
-        <h3 class="font-display font-semibold text-xl mt-6 mb-3">Creamos</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Diseñamos y desarrollamos el sistema visual o la solución integral a la medida, cuidando cada detalle de ejecución.</p>
+        <h3 class="font-display font-semibold text-xl mt-6 mb-3" data-i18n="process.7">Creamos</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="process.8">Diseñamos y desarrollamos el sistema visual o la solución integral a la medida, cuidando cada detalle de ejecución.</p>
       </div>
       <div data-aos="fade-up" data-aos-delay="300" class="border-t border-white/10 pt-8">
         <span class="process-num text-6xl md:text-7xl">04</span>
-        <h3 class="font-display font-semibold text-xl mt-6 mb-3">Conectamos</h3>
-        <p class="text-[var(--grey)] text-sm leading-relaxed">Lanzamos, medimos el impacto comercial y ajustamos con datos para asegurar que tu marca genere atención y resultados.</p>
+        <h3 class="font-display font-semibold text-xl mt-6 mb-3" data-i18n="process.9">Conectamos</h3>
+        <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="process.10">Lanzamos, medimos el impacto comercial y ajustamos con datos para asegurar que tu marca genere atención y resultados.</p>
       </div>
     </div>
   </div>
@@ -1029,14 +1047,14 @@
 <!-- ============ CTA ============ -->
 <section id="cta-idea" class="snap-section relative py-32 px-6 lg:px-10 overflow-hidden">
   <div class="max-w-5xl mx-auto text-center relative z-10">
-    <p data-aos="fade-up" class="eyebrow mb-8 justify-center flex">SIGUIENTE PASO</p>
-    <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05]">
+    <p data-aos="fade-up" class="eyebrow mb-8 justify-center flex" data-i18n="cta.1">SIGUIENTE PASO</p>
+    <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05]" data-i18n="cta.2">
       ¿LISTO PARA IMPULSAR TU MARCA?<br><span class="brand-go">HAGÁMOSLO REALIDAD.</span>
     </h2>
-    <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] mt-8 max-w-lg mx-auto text-lg">Cuéntanos en qué etapa está tu negocio y cuál es tu objetivo. Analizamos tu proyecto a la medida de tu presupuesto y te decimos exactamente cómo dar el siguiente paso.</p>
+    <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] mt-8 max-w-lg mx-auto text-lg" data-i18n="cta.3">Cuéntanos en qué etapa está tu negocio y cuál es tu objetivo. Analizamos tu proyecto a la medida de tu presupuesto y te decimos exactamente cómo dar el siguiente paso.</p>
     <div data-aos="fade-up" data-aos-delay="240" class="mt-10">
       <a href="#contacto" class="btn-primary magnetic rounded-full px-10 py-5 font-medium inline-flex items-center gap-2 text-lg">
-        HABLEMOS DE TU MARCA
+        <span data-i18n="cta.4">HABLEMOS DE TU MARCA</span>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -1051,51 +1069,51 @@
       [ CÓDIGO_INSIGHTS ]
     </div>
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-      <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight max-w-2xl">
+      <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl leading-tight max-w-2xl" data-i18n="insights.1">
         Pensamiento Creativo & <span class="brand-go">Estrategia en Acción.</span>
       </h2>
-      <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] max-w-sm leading-relaxed">
+      <p data-aos="fade-up" data-aos-delay="160" class="text-[var(--grey)] max-w-sm leading-relaxed" data-i18n="insights.2">
         Contenido corto pensado como sistema: cada pieza aplica estrategia, innovación visual y datos reales para escalar negocios, no solo para sumar vistas.
       </p>
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <a href="#" target="_blank" rel="noopener" data-aos="fade-up" class="reel-card group relative rounded-2xl aspect-[9/16] block">
-        <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=800&h=1400&auto=format&fit=crop" alt="Reel: Estrategia y ROI" class="absolute inset-0 w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=800&h=1400&auto=format&fit=crop" alt="Reel: Estrategia y ROI" class="absolute inset-0 w-full h-full object-cover" data-i18n-attr="alt:insights.3">
         <div class="overlay absolute inset-0"></div>
-        <span class="reel-badge absolute top-4 left-4 rounded-full px-3 py-1.5">[ Estrategia & ROI ]</span>
+        <span class="reel-badge absolute top-4 left-4 rounded-full px-3 py-1.5" data-i18n="insights.4">[ Estrategia & ROI ]</span>
         <div class="reel-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
         </div>
         <div class="absolute bottom-0 left-0 right-0 p-6">
-          <h3 class="font-display font-semibold text-xl mb-2">Contenido que sí vende</h3>
-          <p class="text-[var(--grey)] text-sm leading-relaxed">Cómo convertimos un calendario editorial en un motor de resultados medibles.</p>
+          <h3 class="font-display font-semibold text-xl mb-2" data-i18n="insights.5">Contenido que sí vende</h3>
+          <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="insights.6">Cómo convertimos un calendario editorial en un motor de resultados medibles.</p>
         </div>
       </a>
 
       <a href="#" target="_blank" rel="noopener" data-aos="fade-up" data-aos-delay="80" class="reel-card group relative rounded-2xl aspect-[9/16] block">
-        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&h=1400&auto=format&fit=crop" alt="Reel: Innovación Visual" class="absolute inset-0 w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&h=1400&auto=format&fit=crop" alt="Reel: Innovación Visual" class="absolute inset-0 w-full h-full object-cover" data-i18n-attr="alt:insights.7">
         <div class="overlay absolute inset-0"></div>
-        <span class="reel-badge absolute top-4 left-4 rounded-full px-3 py-1.5">[ Innovación Visual ]</span>
+        <span class="reel-badge absolute top-4 left-4 rounded-full px-3 py-1.5" data-i18n="insights.8">[ Innovación Visual ]</span>
         <div class="reel-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
         </div>
         <div class="absolute bottom-0 left-0 right-0 p-6">
-          <h3 class="font-display font-semibold text-xl mb-2">Diseño que rompe el scroll</h3>
-          <p class="text-[var(--grey)] text-sm leading-relaxed">Detrás de escena de las piezas visuales que detienen el pulgar en tres segundos.</p>
+          <h3 class="font-display font-semibold text-xl mb-2" data-i18n="insights.9">Diseño que rompe el scroll</h3>
+          <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="insights.10">Detrás de escena de las piezas visuales que detienen el pulgar en tres segundos.</p>
         </div>
       </a>
 
       <a href="#" target="_blank" rel="noopener" data-aos="fade-up" data-aos-delay="160" class="reel-card group relative rounded-2xl aspect-[9/16] block">
-        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&h=1400&auto=format&fit=crop" alt="Reel: Sistemas de Marca" class="absolute inset-0 w-full h-full object-cover">
+        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&h=1400&auto=format&fit=crop" alt="Reel: Sistemas de Marca" class="absolute inset-0 w-full h-full object-cover" data-i18n-attr="alt:insights.11">
         <div class="overlay absolute inset-0"></div>
-        <span class="reel-badge absolute top-4 left-4 rounded-full px-3 py-1.5">[ Sistemas de Marca ]</span>
+        <span class="reel-badge absolute top-4 left-4 rounded-full px-3 py-1.5" data-i18n="insights.12">[ Sistemas de Marca ]</span>
         <div class="reel-play absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
         </div>
         <div class="absolute bottom-0 left-0 right-0 p-6">
-          <h3 class="font-display font-semibold text-xl mb-2">Marcas hechas para escalar</h3>
-          <p class="text-[var(--grey)] text-sm leading-relaxed">El sistema visual detrás de identidades que crecen sin perder consistencia.</p>
+          <h3 class="font-display font-semibold text-xl mb-2" data-i18n="insights.13">Marcas hechas para escalar</h3>
+          <p class="text-[var(--grey)] text-sm leading-relaxed" data-i18n="insights.14">El sistema visual detrás de identidades que crecen sin perder consistencia.</p>
         </div>
       </a>
     </div>
@@ -1105,38 +1123,38 @@
 <!-- ============ METODOLOGÍA — CITA & PILARES INTERACTIVOS ============ -->
 <section id="metodologia" class="snap-section relative py-32 px-6 lg:px-10 overflow-hidden" style="background:var(--navy-2); border-top:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08);">
   <div class="max-w-6xl mx-auto relative z-10">
-    <p data-aos="fade-up" class="eyebrow mb-10">CÓMO OPERA EL ESTUDIO</p>
+    <p data-aos="fade-up" class="eyebrow mb-10" data-i18n="method.1">CÓMO OPERA EL ESTUDIO</p>
 
     <div data-aos="fade-up" data-aos-delay="80" class="grid md:grid-cols-[auto,1fr] gap-6 md:gap-8 mb-20 items-start">
       <span class="quote-mark text-7xl md:text-8xl leading-none">&ldquo;</span>
       <blockquote class="font-display font-semibold text-2xl md:text-3xl lg:text-4xl leading-tight max-w-3xl">
-        El diseño no es para ganar premios, es el punto donde la estrategia, la emoción y la tecnología se cruzan para que un negocio venda más.
-        <footer class="mt-6 font-mono text-xs tracking-[0.2em] text-[var(--neon)] not-italic">— DIRECCIÓN CREATIVA, CÓDIGO</footer>
+        <span data-i18n="method.2">El diseño no es para ganar premios, es el punto donde la estrategia, la emoción y la tecnología se cruzan para que un negocio venda más.</span>
+        <footer class="mt-6 font-mono text-xs tracking-[0.2em] text-[var(--neon)] not-italic" data-i18n="method.3">— DIRECCIÓN CREATIVA, CÓDIGO</footer>
       </blockquote>
     </div>
 
     <div data-aos="fade-up" data-aos-delay="160" class="border border-white/10 rounded-2xl p-6 md:p-10">
-      <div class="flex flex-col sm:flex-row gap-3 mb-8" role="tablist" aria-label="Metodología de trabajo">
-        <button type="button" class="pillar-pill active rounded-full px-5 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2" data-pillar="entender" role="tab" aria-selected="true">
+      <div class="flex flex-col sm:flex-row gap-3 mb-8" role="tablist" aria-label="Metodología de trabajo" data-i18n-attr="aria-label:method.4">
+        <button type="button" class="pillar-pill active rounded-full px-5 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2" data-pillar="entender" role="tab" aria-selected="true" data-i18n="method.5">
           <span class="pillar-num">01.</span> ENTENDER
         </button>
-        <button type="button" class="pillar-pill rounded-full px-5 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2" data-pillar="estructurar" role="tab" aria-selected="false">
+        <button type="button" class="pillar-pill rounded-full px-5 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2" data-pillar="estructurar" role="tab" aria-selected="false" data-i18n="method.6">
           <span class="pillar-num">02.</span> ESTRUCTURAR
         </button>
-        <button type="button" class="pillar-pill rounded-full px-5 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2" data-pillar="escalar" role="tab" aria-selected="false">
+        <button type="button" class="pillar-pill rounded-full px-5 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2" data-pillar="escalar" role="tab" aria-selected="false" data-i18n="method.7">
           <span class="pillar-num">03.</span> ESCALAR
         </button>
       </div>
 
       <div class="relative min-h-[7rem]">
         <div class="pillar-panel" data-pillar="entender" role="tabpanel">
-          <p class="text-[var(--grey)] leading-relaxed max-w-2xl">Auditamos el negocio, la audiencia y el contexto competitivo antes de diseñar una sola pieza. Aquí definimos qué problema real está resolviendo la marca y qué la hace distinta.</p>
+          <p class="text-[var(--grey)] leading-relaxed max-w-2xl" data-i18n="method.8">Auditamos el negocio, la audiencia y el contexto competitivo antes de diseñar una sola pieza. Aquí definimos qué problema real está resolviendo la marca y qué la hace distinta.</p>
         </div>
         <div class="pillar-panel hidden" data-pillar="estructurar" role="tabpanel">
-          <p class="text-[var(--grey)] leading-relaxed max-w-2xl">Traducimos esa comprensión en un sistema: territorio creativo, arquitectura de contenido y reglas de marca que hacen que cada pieza futura sea consistente y rápida de producir.</p>
+          <p class="text-[var(--grey)] leading-relaxed max-w-2xl" data-i18n="method.9">Traducimos esa comprensión en un sistema: territorio creativo, arquitectura de contenido y reglas de marca que hacen que cada pieza futura sea consistente y rápida de producir.</p>
         </div>
         <div class="pillar-panel hidden" data-pillar="escalar" role="tabpanel">
-          <p class="text-[var(--grey)] leading-relaxed max-w-2xl">Lanzamos, medimos y ajustamos con datos reales. El sistema se vuelve repetible: más contenido, más canales y más resultados sin perder identidad.</p>
+          <p class="text-[var(--grey)] leading-relaxed max-w-2xl" data-i18n="method.10">Lanzamos, medimos y ajustamos con datos reales. El sistema se vuelve repetible: más contenido, más canales y más resultados sin perder identidad.</p>
         </div>
       </div>
     </div>
@@ -1148,9 +1166,9 @@
   <div class="max-w-7xl mx-auto">
     <div class="grid lg:grid-cols-2 gap-16 mb-24">
       <div>
-        <p data-aos="fade-up" class="eyebrow mb-6">HABLEMOS</p>
-        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl mb-8 leading-tight">Cuéntanos<br>tu <span class="brand-go">proyecto.</span></h2>
-        <p data-aos="fade-up" data-aos-delay="120" class="text-[var(--grey)] leading-relaxed max-w-md mb-10">Respondemos en menos de 24 horas hábiles. Sin formularios eternos, sin llamadas de venta innecesarias — solo una conversación honesta sobre tu marca.</p>
+        <p data-aos="fade-up" class="eyebrow mb-6" data-i18n="contact.1">HABLEMOS</p>
+        <h2 data-aos="fade-up" data-aos-delay="80" class="font-display font-bold text-4xl md:text-5xl mb-8 leading-tight" data-i18n="contact.2">Cuéntanos<br>tu <span class="brand-go">proyecto.</span></h2>
+        <p data-aos="fade-up" data-aos-delay="120" class="text-[var(--grey)] leading-relaxed max-w-md mb-10" data-i18n="contact.3">Respondemos en menos de 24 horas hábiles. Sin formularios eternos, sin llamadas de venta innecesarias — solo una conversación honesta sobre tu marca.</p>
         <div data-aos="fade-up" data-aos-delay="160" class="space-y-5 font-mono text-sm">
           <a href="mailto:hola@somoscodigo.com" class="flex items-center gap-3 hover:text-[var(--neon)] transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -1187,36 +1205,36 @@
         <form id="contactForm" class="space-y-5" onsubmit="handleFormSubmit(event)">
           <div class="grid sm:grid-cols-2 gap-5">
             <div>
-              <label for="fname" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide">NOMBRE</label>
-              <input id="fname" type="text" required placeholder="Tu nombre" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm">
+              <label for="fname" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide" data-i18n="contact.4">NOMBRE</label>
+              <input id="fname" type="text" required placeholder="Tu nombre" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm" data-i18n-attr="placeholder:contact.5">
             </div>
             <div>
-              <label for="femail" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide">CORREO</label>
-              <input id="femail" type="email" required placeholder="tu@correo.com" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm">
+              <label for="femail" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide" data-i18n="contact.6">CORREO</label>
+              <input id="femail" type="email" required placeholder="tu@correo.com" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm" data-i18n-attr="placeholder:contact.7">
             </div>
           </div>
           <div>
-            <label for="fservice" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide">SERVICIO DE INTERÉS</label>
+            <label for="fservice" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide" data-i18n="contact.8">SERVICIO DE INTERÉS</label>
             <select id="fservice" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm">
-              <option>Branding</option><option>Diseño Gráfico</option><option>Marketing</option>
-              <option>Comunicación</option><option>Contenido Digital</option><option>Soluciones Creativas</option>
+              <option>Branding</option><option data-i18n="contact.9" value="Diseño Gráfico">Diseño Gráfico</option><option>Marketing</option>
+              <option data-i18n="contact.10" value="Comunicación">Comunicación</option><option data-i18n="contact.11" value="Contenido Digital">Contenido Digital</option><option data-i18n="contact.12" value="Soluciones Creativas">Soluciones Creativas</option>
             </select>
           </div>
           <div>
-            <label for="fmsg" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide">CUÉNTANOS SOBRE TU PROYECTO</label>
-            <textarea id="fmsg" required rows="4" placeholder="¿Qué necesitas lograr?" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm resize-none"></textarea>
+            <label for="fmsg" class="font-mono text-xs text-[var(--grey-dim)] tracking-wide" data-i18n="contact.13">CUÉNTANOS SOBRE TU PROYECTO</label>
+            <textarea id="fmsg" required rows="4" placeholder="¿Qué necesitas lograr?" class="field w-full mt-2 rounded-lg px-4 py-3.5 text-sm resize-none" data-i18n-attr="placeholder:contact.14"></textarea>
           </div>
           <button type="submit" class="btn-primary magnetic rounded-full px-8 py-4 font-medium w-full sm:w-auto inline-flex items-center justify-center gap-2">
-            ENVIAR MENSAJE
+            <span data-i18n="contact.15">ENVIAR MENSAJE</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <p id="formNote" class="font-mono text-xs text-[var(--neon)] hidden">Mensaje enviado. Te contactaremos pronto.</p>
+          <p id="formNote" class="font-mono text-xs text-[var(--neon)] hidden" data-i18n="contact.16">Mensaje enviado. Te contactaremos pronto.</p>
         </form>
       </div>
     </div>
 
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10 font-mono text-xs text-[var(--grey-dim)]">
-      <span>© 2019 CÓDIGO — CREATIVIDAD DIGITAL. TODOS LOS DERECHOS RESERVADOS.</span>
+      <span data-i18n="contact.17">© 2019 CÓDIGO — CREATIVIDAD DIGITAL. TODOS LOS DERECHOS RESERVADOS.</span>
       <span>GUATEMALA</span>
     </div>
   </div>
@@ -1234,14 +1252,14 @@
           <div id="modalCarouselTrack" class="flex transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)]"></div>
         </div>
 
-        <button id="modalPrev" aria-label="Imagen anterior" class="absolute top-1/2 left-4 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 backdrop-blur flex items-center justify-center hover:bg-[var(--neon)] hover:text-[var(--navy)] transition-colors">
+        <button id="modalPrev" aria-label="Imagen anterior" class="absolute top-1/2 left-4 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 backdrop-blur flex items-center justify-center hover:bg-[var(--neon)] hover:text-[var(--navy)] transition-colors" data-i18n-attr="aria-label:modal.1">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button id="modalNext" aria-label="Imagen siguiente" class="absolute top-1/2 right-4 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 backdrop-blur flex items-center justify-center hover:bg-[var(--neon)] hover:text-[var(--navy)] transition-colors">
+        <button id="modalNext" aria-label="Imagen siguiente" class="absolute top-1/2 right-4 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 backdrop-blur flex items-center justify-center hover:bg-[var(--neon)] hover:text-[var(--navy)] transition-colors" data-i18n-attr="aria-label:modal.2">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
 
-        <button onclick="closeModal()" aria-label="Cerrar y volver al portafolio" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/50 backdrop-blur flex items-center justify-center hover:bg-[var(--neon)] hover:text-[var(--navy)] transition-colors">
+        <button onclick="closeModal()" aria-label="Cerrar y volver al portafolio" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-black/50 backdrop-blur flex items-center justify-center hover:bg-[var(--neon)] hover:text-[var(--navy)] transition-colors" data-i18n-attr="aria-label:modal.3">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
 
@@ -1252,13 +1270,13 @@
         <span id="modalCat" class="font-mono text-xs text-[var(--neon)] tracking-widest"></span>
         <h3 id="modalTitle" class="font-display font-bold text-3xl md:text-4xl mt-3 mb-6"></h3>
         <div class="grid sm:grid-cols-2 gap-8 mb-8">
-          <div><p class="font-mono text-xs text-[var(--grey-dim)] mb-2 tracking-wide">CLIENTE</p><p id="modalClient" class="text-white"></p></div>
-          <div><p class="font-mono text-xs text-[var(--grey-dim)] mb-2 tracking-wide">OBJETIVO</p><p id="modalObj" class="text-white"></p></div>
+          <div><p class="font-mono text-xs text-[var(--grey-dim)] mb-2 tracking-wide" data-i18n="modal.4">CLIENTE</p><p id="modalClient" class="text-white"></p></div>
+          <div><p class="font-mono text-xs text-[var(--grey-dim)] mb-2 tracking-wide" data-i18n="modal.5">OBJETIVO</p><p id="modalObj" class="text-white"></p></div>
         </div>
         <p id="modalDesc" class="text-[var(--grey)] leading-relaxed mb-8"></p>
         <button onclick="closeModal()" class="btn-outline rounded-full px-6 py-3 font-mono text-xs tracking-widest inline-flex items-center gap-2">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          VOLVER AL PORTAFOLIO
+          <span data-i18n="modal.6">VOLVER AL PORTAFOLIO</span>
         </button>
       </div>
     </div>
@@ -1270,6 +1288,476 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<!-- ============ i18n — motor de internacionalización (ES / EN) ============ -->
+<script>
+  (function(){
+    'use strict';
+    /* Diccionario centralizado { es, en }. El HTML conserva el español como contenido
+       base (SEO / sin JS); cada nodo traducible lleva data-i18n="clave" o
+       data-i18n-attr="atributo:clave;...". Los textos inyectados por JS usan t('clave'). */
+    window.I18N = {
+     "es": {
+      "ui.1": "VER",
+      "nav.1": "CÓDIGO - Creatividad Digital",
+      "nav.2": "INICIO",
+      "nav.3": "NOSOTROS",
+      "nav.4": "SERVICIOS",
+      "nav.5": "PROYECTOS",
+      "nav.6": "CLIENTES",
+      "nav.7": "CONTACTO",
+      "nav.8": "Hablemos",
+      "menu.1": "Inicio",
+      "menu.2": "Nosotros",
+      "menu.3": "Servicios",
+      "menu.4": "Proyectos",
+      "menu.5": "Clientes",
+      "menu.6": "Contacto",
+      "hero.1": "Video de fondo — referencia",
+      "hero.2": "IDEAS QUE CONECTAN.<br>DISEÑO QUE TRANSFORMA.",
+      "hero.3": "IDEAS QUE CONECTAN, DISEÑO QUE TRANSFORMA.<br>ESTRATEGIA QUE VENDE",
+      "about.1": "QUIÉNES SOMOS",
+      "about.2": "Diseñamos con lógica.<br>Creamos con <span class=\"brand-go\">intención.</span>",
+      "about.3": "Unimos visión conceptual, diseño visual de alto impacto y soluciones digitales integrales para hacer crecer tu negocio. Creatividad con propósito comercial.",
+      "about.4": "CÓDIGO nació de una convicción simple: el buen diseño no decora, resuelve. Combinamos pensamiento estratégico con ejecución precisa para que cada marca no solo se vea distinta, sino que venda y funcione mejor.",
+      "about.5": "Trabajamos con marcas que quieren dejar de competir por precio y empezar a destacar por valor y percepción.",
+      "about.6": "AÑOS DISEÑANDO MARCAS",
+      "about.7": "PROYECTOS ENTREGADOS",
+      "about.8": "CLIENTES QUE RENUEVAN",
+      "about.9": "SOLUCIONES INTEGRALES",
+      "about.10": "// FILOSOFÍA",
+      "about.11": "\"Cada negocio enfrenta un mercado distinto y cuenta con un presupuesto diferente para alcanzar a sus clientes. Por eso no vendemos diseño genérico: construimos soluciones visuales personalizadas para que no pierdas oportunidades de venta, conectes de forma directa con tu público objetivo y destaques de verdad.\"",
+      "about.12": "César Alfaro / Director Creativo & Especialista en Marcas",
+      "services.1": "LO QUE HACEMOS",
+      "services.2": "Seis soluciones.<br>Un solo <span class=\"brand-go\">ecosistema.</span>",
+      "services.3": "Cada solución se diseña según el presupuesto y objetivo de tu negocio. Diseñamos la cara visible y ejecutamos todo el sistema de forma integral.",
+      "services.4": "Branding & Identidad Visual",
+      "services.5": "Construcción estratégica de marca desde cero: naming, logotipo, manual de marca y empaque comercial diseñados para destacar y aumentar el valor percibido.",
+      "services.6": "Performance & Pauta Digital",
+      "services.7": "Estrategias de captación y ventas basadas en datos: pauta en redes, funnels de conversión y campañas enfocadas en retorno de inversión (ROI).",
+      "services.8": "Estrategia & Copywriting",
+      "services.9": "Definición del tono, mensajes clave y redacción comercial persuasiva para que tu negocio conecte con el grupo objetivo correcto y cierre más ventas.",
+      "services.10": "Contenido Digital & Motion",
+      "services.11": "Producción visual de alto impacto, animación y contenido estratégico para mantener a tu marca relevante, atractiva y activa cada semana.",
+      "services.12": "Desarrollo Web & Landing Pages",
+      "services.13": "Sitios web responsivos y páginas de aterrizaje optimizadas para la conversión, enfocadas en transformar visit en clientes potenciales.",
+      "services.14": "Soluciones Creativas 360°",
+      "services.15": "Proyectos a la medida para retos específicos: campañas de lanzamiento, activaciones, piezas comerciales complejas y productos de marca.",
+      "work.1": "PORTAFOLIO",
+      "work.2": "Proyectos que <span class=\"brand-go\">hablan</span><br>por sus resultados.",
+      "work.3": "Proyecto Nortia Bank",
+      "work.4": "Proyecto Verde Café",
+      "work.5": "IDENTIDAD DE MARCA",
+      "work.6": "Proyecto Lúmina Studios",
+      "work.7": "MARKETING DIGITAL",
+      "work.8": "Proyecto Raíz Orgánica",
+      "work.9": "BRANDING · EMPAQUE",
+      "work.10": "Proyecto Órbita Tech",
+      "work.11": "CONTENIDO DIGITAL",
+      "ba.1": "TRANSFORMACIÓN REAL",
+      "ba.2": "Antes y después <span class=\"brand-go\">del cambio estratégico.</span>",
+      "ba.3": "Arrastra la línea para ver la evolución visual y comercial. Así transformamos marcas genéricas en activos visuales de alto valor percibido.",
+      "ba.4": "Proyecto anterior",
+      "ba.5": "Siguiente proyecto",
+      "ba.6": "Verde Café antes del rediseño",
+      "ba.7": "Verde Café después del rediseño",
+      "ba.8": "Después",
+      "ba.9": "Antes",
+      "ba.10": "Nortia Bank antes del rediseño",
+      "ba.11": "Nortia Bank después del rediseño",
+      "ba.12": "Raíz Orgánica antes del rediseño",
+      "ba.13": "Raíz Orgánica después del rediseño",
+      "motion.1": "ANIMACIÓN DIGITAL",
+      "motion.2": "Piezas que <span class=\"brand-go\">captan atención</span><br>donde vive la marca.",
+      "motion.3": "Motion graphics diseñados para pantallas reales y entornos comerciales: mupis digitales, punto de venta, redes sociales y formatos especiales que convierten miradas en clientes.",
+      "motion.4": "Mockup de referencia: mupi digital vertical en centro comercial",
+      "motion.5": "MUPI DIGITAL · CENTRO COMERCIAL",
+      "motion.6": "Mockup de referencia: pantalla horizontal en restaurante",
+      "motion.7": "PANTALLA · RESTAURANTE",
+      "motion.8": "Mockup de referencia: pantalla digital en la valla pasarela sobre avenida Roosevelt",
+      "motion.9": "VALLA PASARELA · AV. ROOSEVELT",
+      "motion.10": "Pieza anterior",
+      "motion.11": "Siguiente pieza",
+      "clients.1": "CONFÍAN EN NOSOTROS",
+      "clients.2": "Marcas que ya <span class=\"brand-go\">conectan.</span>",
+      "clients.3": "Ver logo anterior",
+      "clients.4": "Ver logo siguiente",
+      "process.1": "CÓMO TRABAJAMOS",
+      "process.2": "Un método.<span class=\"brand-go\"> Resultados reales.</span>",
+      "process.3": "Escuchamos",
+      "process.4": "Analizamos tu modelo de negocio, tu grupo objetivo y tu presupuesto disponible antes de trazar la primera idea visual.",
+      "process.5": "Estrategizamos",
+      "process.6": "Definimos la ruta visual y el mensaje comercial: qué debe comunicar la marca para conectar con la audiencia correcta y diferenciarse.",
+      "process.7": "Creamos",
+      "process.8": "Diseñamos y desarrollamos el sistema visual o la solución integral a la medida, cuidando cada detalle de ejecución.",
+      "process.9": "Conectamos",
+      "process.10": "Lanzamos, medimos el impacto comercial y ajustamos con datos para asegurar que tu marca genere atención y resultados.",
+      "cta.1": "SIGUIENTE PASO",
+      "cta.2": "¿LISTO PARA IMPULSAR TU MARCA?<br><span class=\"brand-go\">HAGÁMOSLO REALIDAD.</span>",
+      "cta.3": "Cuéntanos en qué etapa está tu negocio y cuál es tu objetivo. Analizamos tu proyecto a la medida de tu presupuesto y te decimos exactamente cómo dar el siguiente paso.",
+      "cta.4": "HABLEMOS DE TU MARCA",
+      "insights.1": "Pensamiento Creativo & <span class=\"brand-go\">Estrategia en Acción.</span>",
+      "insights.2": "Contenido corto pensado como sistema: cada pieza aplica estrategia, innovación visual y datos reales para escalar negocios, no solo para sumar vistas.",
+      "insights.3": "Reel: Estrategia y ROI",
+      "insights.4": "[ Estrategia & ROI ]",
+      "insights.5": "Contenido que sí vende",
+      "insights.6": "Cómo convertimos un calendario editorial en un motor de resultados medibles.",
+      "insights.7": "Reel: Innovación Visual",
+      "insights.8": "[ Innovación Visual ]",
+      "insights.9": "Diseño que rompe el scroll",
+      "insights.10": "Detrás de escena de las piezas visuales que detienen el pulgar en tres segundos.",
+      "insights.11": "Reel: Sistemas de Marca",
+      "insights.12": "[ Sistemas de Marca ]",
+      "insights.13": "Marcas hechas para escalar",
+      "insights.14": "El sistema visual detrás de identidades que crecen sin perder consistencia.",
+      "method.1": "CÓMO OPERA EL ESTUDIO",
+      "method.2": "El diseño no es para ganar premios, es el punto donde la estrategia, la emoción y la tecnología se cruzan para que un negocio venda más.",
+      "method.3": "— DIRECCIÓN CREATIVA, CÓDIGO",
+      "method.4": "Metodología de trabajo",
+      "method.5": "<span class=\"pillar-num\">01.</span> ENTENDER",
+      "method.6": "<span class=\"pillar-num\">02.</span> ESTRUCTURAR",
+      "method.7": "<span class=\"pillar-num\">03.</span> ESCALAR",
+      "method.8": "Auditamos el negocio, la audiencia y el contexto competitivo antes de diseñar una sola pieza. Aquí definimos qué problema real está resolviendo la marca y qué la hace distinta.",
+      "method.9": "Traducimos esa comprensión en un sistema: territorio creativo, arquitectura de contenido y reglas de marca que hacen que cada pieza futura sea consistente y rápida de producir.",
+      "method.10": "Lanzamos, medimos y ajustamos con datos reales. El sistema se vuelve repetible: más contenido, más canales y más resultados sin perder identidad.",
+      "contact.1": "HABLEMOS",
+      "contact.2": "Cuéntanos<br>tu <span class=\"brand-go\">proyecto.</span>",
+      "contact.3": "Respondemos en menos de 24 horas hábiles. Sin formularios eternos, sin llamadas de venta innecesarias — solo una conversación honesta sobre tu marca.",
+      "contact.4": "NOMBRE",
+      "contact.5": "Tu nombre",
+      "contact.6": "CORREO",
+      "contact.7": "tu@correo.com",
+      "contact.8": "SERVICIO DE INTERÉS",
+      "contact.9": "Diseño Gráfico",
+      "contact.10": "Comunicación",
+      "contact.11": "Contenido Digital",
+      "contact.12": "Soluciones Creativas",
+      "contact.13": "CUÉNTANOS SOBRE TU PROYECTO",
+      "contact.14": "¿Qué necesitas lograr?",
+      "contact.15": "ENVIAR MENSAJE",
+      "contact.16": "Mensaje enviado. Te contactaremos pronto.",
+      "contact.17": "© 2019 CÓDIGO — CREATIVIDAD DIGITAL. TODOS LOS DERECHOS RESERVADOS.",
+      "modal.1": "Imagen anterior",
+      "modal.2": "Imagen siguiente",
+      "modal.3": "Cerrar y volver al portafolio",
+      "modal.4": "CLIENTE",
+      "modal.5": "OBJETIVO",
+      "modal.6": "VOLVER AL PORTAFOLIO",
+      "meta.title": "CÓDIGO - Creatividad Digital | Diseño, Branding y Marketing",
+      "meta.desc": "CÓDIGO es un estudio de creatividad digital en Guatemala. Diseñamos, comunicamos y conectamos marcas con resultados reales a través de branding, marketing y contenido digital.",
+      "trace.inicio": "INICIO",
+      "trace.nosotros": "NOSOTROS",
+      "trace.servicios": "SERVICIOS",
+      "trace.proyectos": "PROYECTOS",
+      "trace.transformacion": "TRANSFORMACIÓN",
+      "trace.clientes": "CLIENTES",
+      "trace.proceso": "PROCESO",
+      "trace.cta-idea": "IDEA",
+      "trace.insights": "INSIGHTS",
+      "trace.metodologia": "METODOLOGÍA",
+      "trace.contacto": "CONTACTO",
+      "dyn.viewProject": "Ver proyecto",
+      "dyn.goProject": "Ir al proyecto",
+      "dyn.goPiece": "Ir a la pieza",
+      "dyn.viewImage": "Ver imagen",
+      "dyn.image": "imagen"
+     },
+     "en": {
+      "ui.1": "VIEW",
+      "nav.1": "CÓDIGO - Digital Creativity",
+      "nav.2": "HOME",
+      "nav.3": "ABOUT",
+      "nav.4": "SERVICES",
+      "nav.5": "WORK",
+      "nav.6": "CLIENTS",
+      "nav.7": "CONTACT",
+      "nav.8": "Let's talk",
+      "menu.1": "Home",
+      "menu.2": "About",
+      "menu.3": "Services",
+      "menu.4": "Work",
+      "menu.5": "Clients",
+      "menu.6": "Contact",
+      "hero.1": "Background video — reference",
+      "hero.2": "IDEAS THAT CONNECT.<br>DESIGN THAT TRANSFORMS.",
+      "hero.3": "IDEAS THAT CONNECT, DESIGN THAT TRANSFORMS.<br>STRATEGY THAT SELLS",
+      "about.1": "WHO WE ARE",
+      "about.2": "We design with logic.<br>We create with <span class=\"brand-go\">intent.</span>",
+      "about.3": "We combine conceptual vision, high-impact visual design and end-to-end digital solutions to grow your business. Creativity with commercial purpose.",
+      "about.4": "CÓDIGO was born from a simple conviction: good design doesn't decorate, it solves. We pair strategic thinking with precise execution so every brand doesn't just look different — it sells and performs better.",
+      "about.5": "We work with brands that want to stop competing on price and start standing out on value and perception.",
+      "about.6": "YEARS DESIGNING BRANDS",
+      "about.7": "PROJECTS DELIVERED",
+      "about.8": "CLIENTS WHO RENEW",
+      "about.9": "INTEGRATED SOLUTIONS",
+      "about.10": "// PHILOSOPHY",
+      "about.11": "\"Every business faces a different market and works with a different budget to reach its customers. That's why we don't sell generic design: we build tailored visual solutions so you never miss a sales opportunity, connect directly with your target audience and truly stand out.\"",
+      "about.12": "César Alfaro / Creative Director & Brand Specialist",
+      "services.1": "WHAT WE DO",
+      "services.2": "Six solutions.<br>One <span class=\"brand-go\">ecosystem.</span>",
+      "services.3": "Every solution is designed around your business's budget and goals. We design the visible face and execute the entire system end to end.",
+      "services.4": "Branding & Visual Identity",
+      "services.5": "Strategic brand building from scratch: naming, logo, brand guidelines and commercial packaging designed to stand out and increase perceived value.",
+      "services.6": "Performance & Paid Media",
+      "services.7": "Data-driven acquisition and sales strategies: paid social, conversion funnels and campaigns built around return on investment (ROI).",
+      "services.8": "Strategy & Copywriting",
+      "services.9": "Tone of voice, key messaging and persuasive commercial copy so your business connects with the right audience and closes more sales.",
+      "services.10": "Digital Content & Motion",
+      "services.11": "High-impact visual production, animation and strategic content to keep your brand relevant, engaging and active every week.",
+      "services.12": "Web Development & Landing Pages",
+      "services.13": "Responsive websites and conversion-optimized landing pages designed to turn visitors into qualified leads.",
+      "services.14": "Creative Solutions 360°",
+      "services.15": "Tailored projects for specific challenges: launch campaigns, activations, complex commercial pieces and branded products.",
+      "work.1": "PORTFOLIO",
+      "work.2": "Projects that <span class=\"brand-go\">speak</span><br>through their results.",
+      "work.3": "Nortia Bank project",
+      "work.4": "Verde Café project",
+      "work.5": "BRAND IDENTITY",
+      "work.6": "Lúmina Studios project",
+      "work.7": "DIGITAL MARKETING",
+      "work.8": "Raíz Orgánica project",
+      "work.9": "BRANDING · PACKAGING",
+      "work.10": "Órbita Tech project",
+      "work.11": "DIGITAL CONTENT",
+      "ba.1": "REAL TRANSFORMATION",
+      "ba.2": "Before and after <span class=\"brand-go\">the strategic shift.</span>",
+      "ba.3": "Drag the line to see the visual and commercial evolution. This is how we turn generic brands into high-perceived-value visual assets.",
+      "ba.4": "Previous project",
+      "ba.5": "Next project",
+      "ba.6": "Verde Café before the redesign",
+      "ba.7": "Verde Café after the redesign",
+      "ba.8": "After",
+      "ba.9": "Before",
+      "ba.10": "Nortia Bank before the redesign",
+      "ba.11": "Nortia Bank after the redesign",
+      "ba.12": "Raíz Orgánica before the redesign",
+      "ba.13": "Raíz Orgánica after the redesign",
+      "motion.1": "DIGITAL ANIMATION",
+      "motion.2": "Pieces that <span class=\"brand-go\">capture attention</span><br>where the brand lives.",
+      "motion.3": "Motion graphics designed for real screens and commercial environments: digital totems, point of sale, social media and special formats that turn glances into customers.",
+      "motion.4": "Reference mockup: vertical digital totem in a shopping mall",
+      "motion.5": "DIGITAL TOTEM · SHOPPING MALL",
+      "motion.6": "Reference mockup: horizontal screen in a restaurant",
+      "motion.7": "SCREEN · RESTAURANT",
+      "motion.8": "Reference mockup: digital screen on the footbridge billboard over Roosevelt Avenue",
+      "motion.9": "FOOTBRIDGE BILLBOARD · ROOSEVELT AVE.",
+      "motion.10": "Previous piece",
+      "motion.11": "Next piece",
+      "clients.1": "TRUSTED BY",
+      "clients.2": "Brands that already <span class=\"brand-go\">connect.</span>",
+      "clients.3": "View previous logo",
+      "clients.4": "View next logo",
+      "process.1": "HOW WE WORK",
+      "process.2": "One method.<span class=\"brand-go\"> Real results.</span>",
+      "process.3": "Listen",
+      "process.4": "We analyze your business model, your target audience and your available budget before sketching the first visual idea.",
+      "process.5": "Strategize",
+      "process.6": "We define the visual route and commercial message: what the brand must communicate to reach the right audience and stand apart.",
+      "process.7": "Create",
+      "process.8": "We design and build the visual system or end-to-end solution, tailored to you, with every execution detail taken care of.",
+      "process.9": "Connect",
+      "process.10": "We launch, measure commercial impact and optimize with data to make sure your brand generates attention and results.",
+      "cta.1": "NEXT STEP",
+      "cta.2": "READY TO POWER UP YOUR BRAND?<br><span class=\"brand-go\">LET'S MAKE IT HAPPEN.</span>",
+      "cta.3": "Tell us what stage your business is at and what your goal is. We'll scope your project to fit your budget and tell you exactly how to take the next step.",
+      "cta.4": "LET'S TALK ABOUT YOUR BRAND",
+      "insights.1": "Creative Thinking & <span class=\"brand-go\">Strategy in Action.</span>",
+      "insights.2": "Short-form content built as a system: every piece applies strategy, visual innovation and real data to scale businesses, not just to rack up views.",
+      "insights.3": "Reel: Strategy & ROI",
+      "insights.4": "[ Strategy & ROI ]",
+      "insights.5": "Content that actually sells",
+      "insights.6": "How we turn an editorial calendar into an engine for measurable results.",
+      "insights.7": "Reel: Visual Innovation",
+      "insights.8": "[ Visual Innovation ]",
+      "insights.9": "Design that breaks the scroll",
+      "insights.10": "Behind the scenes of the visuals that stop thumbs in three seconds.",
+      "insights.11": "Reel: Brand Systems",
+      "insights.12": "[ Brand Systems ]",
+      "insights.13": "Brands built to scale",
+      "insights.14": "The visual system behind identities that grow without losing consistency.",
+      "method.1": "HOW THE STUDIO OPERATES",
+      "method.2": "Design isn't about winning awards — it's the point where strategy, emotion and technology intersect so a business can sell more.",
+      "method.3": "— CREATIVE DIRECTION, CÓDIGO",
+      "method.4": "Working methodology",
+      "method.5": "<span class=\"pillar-num\">01.</span> UNDERSTAND",
+      "method.6": "<span class=\"pillar-num\">02.</span> STRUCTURE",
+      "method.7": "<span class=\"pillar-num\">03.</span> SCALE",
+      "method.8": "We audit the business, the audience and the competitive landscape before designing a single piece. This is where we define the real problem the brand is solving and what sets it apart.",
+      "method.9": "We turn that understanding into a system: creative territory, content architecture and brand rules that make every future piece consistent and fast to produce.",
+      "method.10": "We launch, measure and optimize with real data. The system becomes repeatable: more content, more channels and more results without losing identity.",
+      "contact.1": "LET'S TALK",
+      "contact.2": "Tell us<br>about your <span class=\"brand-go\">project.</span>",
+      "contact.3": "We reply within 24 business hours. No endless forms, no unnecessary sales calls — just an honest conversation about your brand.",
+      "contact.4": "NAME",
+      "contact.5": "Your name",
+      "contact.6": "EMAIL",
+      "contact.7": "you@email.com",
+      "contact.8": "SERVICE OF INTEREST",
+      "contact.9": "Graphic Design",
+      "contact.10": "Communication",
+      "contact.11": "Digital Content",
+      "contact.12": "Creative Solutions",
+      "contact.13": "TELL US ABOUT YOUR PROJECT",
+      "contact.14": "What do you need to achieve?",
+      "contact.15": "SEND MESSAGE",
+      "contact.16": "Message sent. We'll be in touch soon.",
+      "contact.17": "© 2019 CÓDIGO — DIGITAL CREATIVITY. ALL RIGHTS RESERVED.",
+      "modal.1": "Previous image",
+      "modal.2": "Next image",
+      "modal.3": "Close and return to portfolio",
+      "modal.4": "CLIENT",
+      "modal.5": "OBJECTIVE",
+      "modal.6": "BACK TO PORTFOLIO",
+      "meta.title": "CÓDIGO - Digital Creativity | Design, Branding & Marketing",
+      "meta.desc": "CÓDIGO is a digital creativity studio in Guatemala. We design, communicate and connect brands with real results through branding, marketing and digital content.",
+      "trace.inicio": "HOME",
+      "trace.nosotros": "ABOUT",
+      "trace.servicios": "SERVICES",
+      "trace.proyectos": "WORK",
+      "trace.transformacion": "TRANSFORMATION",
+      "trace.clientes": "CLIENTS",
+      "trace.proceso": "PROCESS",
+      "trace.cta-idea": "IDEA",
+      "trace.insights": "INSIGHTS",
+      "trace.metodologia": "METHODOLOGY",
+      "trace.contacto": "CONTACT",
+      "dyn.viewProject": "View project",
+      "dyn.goProject": "Go to project",
+      "dyn.goPiece": "Go to piece",
+      "dyn.viewImage": "View image",
+      "dyn.image": "image"
+     },
+     "projects": {
+      "Nortia Bank": {
+       "cat": "Branding · Digital Design",
+       "obj": "Reposition a traditional bank as a trusted fintech for new generations.",
+       "desc": "We completely redesigned Nortia Bank's identity, from the logo to the interface system of its app. The result was a 34% increase in app downloads in the first quarter after the relaunch."
+      },
+      "Verde Café": {
+       "cat": "Brand Identity",
+       "obj": "Create a specialty coffee brand that could compete visually with international chains.",
+       "desc": "We developed the identity, packaging and point-of-sale experience for Verde Café. The new image made it possible to open three additional locations within a year, backed by a replicable visual system."
+      },
+      "Lúmina Studios": {
+       "cat": "Digital Marketing",
+       "obj": "Increase qualified lead generation for a luxury architecture studio.",
+       "desc": "We designed and ran a content and paid media strategy built around a visual portfolio. Qualified leads grew 2.4x in six months, with a 40% lower cost per acquisition."
+      },
+      "Raíz Orgánica": {
+       "cat": "Branding · Packaging",
+       "obj": "Differentiate an organic food line on a shelf crowded with competitors.",
+       "desc": "Raíz Orgánica's new packaging system uses botanical illustration and clear benefit iconography. In-store sales grew 27% in the first four months."
+      },
+      "Órbita Tech": {
+       "cat": "Digital Content",
+       "obj": "Humanize the communication of a B2B software company for non-technical audiences.",
+       "desc": "We created a video and social editorial line that translated technical features into clear benefits. LinkedIn engagement multiplied by 3.1 in the first quarter of the campaign."
+      }
+     }
+    };
+
+    var STORAGE_KEY = 'preferred_lang', DEFAULT_LANG = 'es', SUPPORTED = ['es', 'en'];
+    var lang = DEFAULT_LANG, target = DEFAULT_LANG, booted = false, timer = null;
+
+    function detectLang(){
+      var saved = null;
+      try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+      if (SUPPORTED.indexOf(saved) > -1) return saved;                        // 1. preferencia guardada
+      var nav = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+      return nav.indexOf('en') === 0 ? 'en' : DEFAULT_LANG;                   // 2. navegador · 3. español por defecto
+    }
+    function t(key){
+      var d = window.I18N[lang];
+      if (d && d[key] != null) return d[key];
+      var f = window.I18N[DEFAULT_LANG][key];
+      return f != null ? f : '';
+    }
+    window.t = t;
+    window.getLang = function(){ return lang; };
+    window.projectText = function(card, field){
+      if (lang === 'en') { var p = window.I18N.projects[card.dataset.title]; if (p && p[field]) return p[field]; }
+      return card.dataset[field];
+    };
+
+    function syncSwitcher(){
+      document.querySelectorAll('.lang-btn').forEach(function(b){
+        var on = b.getAttribute('data-lang') === lang;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+
+    function applyTranslations(){
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        var v = t(el.getAttribute('data-i18n')); if (!v) return;
+        if (el.tagName === 'TITLE') el.textContent = v; else el.innerHTML = v;
+      });
+      document.querySelectorAll('[data-i18n-attr]').forEach(function(el){
+        el.getAttribute('data-i18n-attr').split(';').forEach(function(pair){
+          var i = pair.indexOf(':'), v = t(pair.slice(i + 1)); if (v) el.setAttribute(pair.slice(0, i), v);
+        });
+      });
+
+      // Etiquetas generadas dinámicamente por los scripts del sitio
+      document.querySelectorAll('.port-card').forEach(function(c){ c.setAttribute('aria-label', t('dyn.viewProject') + ' ' + c.dataset.title); });
+      [['.ba-dot','dyn.goProject'], ['.motion-dot','dyn.goPiece'], ['.modal-dot','dyn.viewImage']].forEach(function(p){
+        document.querySelectorAll(p[0]).forEach(function(d, i){ d.setAttribute('aria-label', t(p[1]) + ' ' + (i + 1)); });
+      });
+      try {
+        if (typeof traceSections !== 'undefined' && typeof traceCurrent !== 'undefined' && traceSections[traceCurrent]) {
+          document.getElementById('traceLabel').textContent = t('trace.' + traceSections[traceCurrent].id);
+        }
+      } catch (e) {}
+      // Modal abierto: refresca su contenido en el nuevo idioma
+      var modalEl = document.getElementById('projectModal'), card = window.__modalCard;
+      if (modalEl && card && !modalEl.classList.contains('hidden')) {
+        document.getElementById('modalCat').textContent = window.projectText(card, 'cat').toUpperCase();
+        document.getElementById('modalObj').textContent = window.projectText(card, 'obj');
+        document.getElementById('modalDesc').textContent = window.projectText(card, 'desc');
+        document.querySelectorAll('#modalCarouselTrack img').forEach(function(im, i){ im.alt = card.dataset.title + ' — ' + t('dyn.image') + ' ' + (i + 1); });
+      }
+      syncSwitcher();
+      document.dispatchEvent(new CustomEvent('languagechange', { detail: { lang: lang } }));
+      // Los textos cambian de longitud: se recalculan AOS / ScrollTrigger / Lenis sin tocar su estado
+      requestAnimationFrame(function(){
+        try { if (window.AOS) AOS.refresh(); } catch (e) {}
+        try { if (window.ScrollTrigger) ScrollTrigger.refresh(); } catch (e) {}
+        try { if (typeof lenis !== 'undefined' && lenis && lenis.resize) lenis.resize(); } catch (e) {}
+      });
+    }
+
+    function setLanguage(next, persist){
+      if (SUPPORTED.indexOf(next) < 0 || next === target) return;
+      target = next;
+      if (persist) { try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {} }
+      var root = document.documentElement;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      clearTimeout(timer);
+      if (reduce || !booted) { lang = target; applyTranslations(); return; }
+      root.classList.add('i18n-fade');                                         // fade-out suave de secciones
+      timer = setTimeout(function(){
+        lang = target; applyTranslations();
+        requestAnimationFrame(function(){ root.classList.remove('i18n-fade'); }); // fade-in
+      }, 180);
+    }
+    window.setLanguage = function(l){ setLanguage(l, true); };
+
+    document.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('.lang-btn');
+      if (b) setLanguage(b.getAttribute('data-lang'), true);
+    });
+
+    // Idioma inicial (disponible para t() antes de que corran los demás scripts)
+    lang = target = detectLang();
+    function boot(){
+      if (lang !== DEFAULT_LANG) applyTranslations(); else syncSwitcher();     // en español el DOM ya está listo: cero cambios
+      document.documentElement.classList.remove('i18n-pending');
+      booted = true;
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  })();
+</script>
 
 <script>
   // Cada inicialización de librería externa va en su propio try/catch: si un CDN
@@ -1555,14 +2043,14 @@
 
   function renderModalCarousel(images, title){
     carouselTrack.innerHTML = images.map((src, i) =>
-      `<div class="aspect-[16/10]"><img src="${src}" alt="${title} — imagen ${i + 1}"></div>`
+      `<div class="aspect-[16/10]"><img src="${src}" alt="${title} — ${t('dyn.image')} ${i + 1}"></div>`
     ).join('');
     carouselTrack.style.transform = 'translateX(0%)';
     modalDotsWrap.innerHTML = '';
     images.forEach((_, i) => {
       const dot = document.createElement('button');
       dot.className = 'modal-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', 'Ver imagen ' + (i + 1));
+      dot.setAttribute('aria-label', t('dyn.viewImage') + ' ' + (i + 1));
       dot.addEventListener('click', () => goToModalSlide(i));
       modalDotsWrap.appendChild(dot);
     });
@@ -1583,7 +2071,7 @@
   document.querySelectorAll('.port-card').forEach(card => {
     card.setAttribute('tabindex', '0');
     card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', 'Ver proyecto ' + card.dataset.title);
+    card.setAttribute('aria-label', t('dyn.viewProject') + ' ' + card.dataset.title);
     const open = () => openProjectModal(card);
     card.addEventListener('click', open);
     card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
@@ -1594,11 +2082,12 @@
     lastFocusedEl = document.activeElement;
     try { modalImages = JSON.parse(card.dataset.images); } catch (err) { modalImages = [card.dataset.img].filter(Boolean); }
     renderModalCarousel(modalImages, card.dataset.title);
-    document.getElementById('modalCat').textContent = card.dataset.cat.toUpperCase();
+    window.__modalCard = card;
+    document.getElementById('modalCat').textContent = projectText(card, 'cat').toUpperCase();
     document.getElementById('modalTitle').textContent = card.dataset.title;
     document.getElementById('modalClient').textContent = card.dataset.client;
-    document.getElementById('modalObj').textContent = card.dataset.obj;
-    document.getElementById('modalDesc').textContent = card.dataset.desc;
+    document.getElementById('modalObj').textContent = projectText(card, 'obj');
+    document.getElementById('modalDesc').textContent = projectText(card, 'desc');
 
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
@@ -1639,7 +2128,7 @@
   baSlides.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'ba-dot' + (i === 0 ? ' active' : '');
-    dot.setAttribute('aria-label', 'Ir al proyecto ' + (i + 1));
+    dot.setAttribute('aria-label', t('dyn.goProject') + ' ' + (i + 1));
     dot.addEventListener('click', () => goToSlide(i));
     baDotsWrap.appendChild(dot);
   });
@@ -1745,7 +2234,7 @@
     const s = traceSections[i]; if (!s) return;
     traceIcon.style.opacity = 0;
     setTimeout(() => { traceIcon.innerHTML = s.icon; traceIcon.style.opacity = 1; }, 150);
-    traceLabel.textContent = s.label;
+    traceLabel.textContent = t('trace.' + s.id) || s.label;
   }
   function updateTraceProgress(){
     const doc = document.documentElement;
@@ -1785,7 +2274,7 @@
     slides.forEach((_, i) => {
       const dot = document.createElement('button');
       dot.className = 'motion-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', 'Ir a la pieza ' + (i + 1));
+      dot.setAttribute('aria-label', t('dyn.goPiece') + ' ' + (i + 1));
       dot.addEventListener('click', () => goTo(i));
       dotsWrap.appendChild(dot);
     });
